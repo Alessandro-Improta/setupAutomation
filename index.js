@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 
 
-const port = 3000;
+const port = 8080;
 
 app.get('/loggedIn', auth.loggedIn);
 app.get('/firstLogIn', auth.firstLogIn);
