@@ -89,7 +89,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let createGTMContainer = function() {
-		return $http.({
+		return $http({
 			method: "POST",
 			url: appUrl + '/createGTMContainer',
 			data: {
@@ -109,7 +109,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let createGTMVariables = function() {
-		return $http.({
+		return $http({
 			method: "POST",
 			url: appUrl + '/createGTMVariables',
 			data: {
@@ -133,7 +133,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let createGTMTrigger = function() {
-		return $http.({
+		return $http({
 			method: "post",
 			url : appUrl + '/createGTMTrigger',
 			data: {
@@ -174,7 +174,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let linkAnalytics = function() {
-		return $http.({
+		return $http({
 			method: "POST",
 			url: appUrl + '/linkAnalytics',
 			data: {
