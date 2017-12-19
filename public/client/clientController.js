@@ -264,7 +264,6 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 									})
 							})
 					})
-			})
 	})();
 
 })
