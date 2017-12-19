@@ -12,17 +12,15 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		let values = [$scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		setTokens()
 			.then(function(res){
-				addData(keys, values)
+				addData(keys, values);
+				sendLinkRequest()
 					.then(function(res){
-						sendLinkRequest()
+						getTemplate()
 							.then(function(res){
-								getTemplate()
+								revokeToken()
 									.then(function(res){
-										revokeToken()
-											.then(function(res){
-												$scope.show1 = false;
-												$scope.show2 = true;
-											});
+										$scope.show1 = false;
+										$scope.show2 = true;
 									});
 							});
 					});
