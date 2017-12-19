@@ -113,7 +113,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			method: "POST",
 			url: appUrl + '/createGTMVariables',
 			data: {
-				homePageUrl: localStorage.homePageUrl;
+				homePageUrl: localStorage.homePageUrl
 			}
 		})
 		.then(function(res) {
