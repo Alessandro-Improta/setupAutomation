@@ -153,7 +153,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let acceptLinkRequest = function() {
-		return $http.({
+		return $http({
 			method: "POST",
 			url: appUrl + '/acceptLinkRequest',
 			data: {
