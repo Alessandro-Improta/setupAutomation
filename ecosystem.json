@@ -1,6 +1,6 @@
 {
     "apps" : [{
-        "name"        : "Setup Automation",
+        "name"        : "setupAutomation",
         "script"      : "index.js",
         "env": {
             "NODE_ENV": "production"
