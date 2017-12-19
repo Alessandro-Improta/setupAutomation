@@ -35,6 +35,14 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			});
 	};
 
+	let clearData = function() {
+		return localStorage = {};
+	};
+
+	let goHome = function(){
+		$location.path('/');
+	};
+
 	let sendLinkRequest = function() {
 		return $http.post(appUrl + '/sendLinkRequest')
 					.then(function(res){
