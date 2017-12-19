@@ -13,7 +13,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			url: appUrl + '/tokens',
 			data: {
 				code: query,
-				customerId: localStorage.customerId;
+				customerId: localStorage.customerId
 			}
 		})
 			.then(function(res) {
