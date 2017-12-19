@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const cors = require('cors');
 const google = require('googleapis');
 const auth = require('./auth.js');
 const gtm = require('./GTMController.js');
@@ -11,16 +10,11 @@ const analytics = require('./analytics.js');
 
 const app = express();
 
-const corsOptions = {
-	origin: 'http://localhost:3000'
-}
-
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
 
 
-const port = 8080;
+const port = 3000;
 
 app.get('/loggedIn', auth.loggedIn);
 app.get('/firstLogIn', auth.firstLogIn);
