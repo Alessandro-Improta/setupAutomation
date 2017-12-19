@@ -88,7 +88,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 	let setTokens = function() {
 		var sliceStart = appUrl.length + 7;
-		var sliceEnd = sliceStart + 45;
+		var sliceEnd = sliceStart + 89;
 		var currentUrl = $location.absUrl();
 		var query = currentUrl.slice(sliceStart, sliceEnd);
 		return $http({

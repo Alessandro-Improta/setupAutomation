@@ -16,5 +16,12 @@ module.exports = {
 		res.send({
 			inputData: inputData
 		})
+	},
+
+	clearData: function(req, res, next) {
+		inputData = {};
+		res.send({
+			message: 'Data cleared'
+		})
 	}
 }

@@ -9,7 +9,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 
 	let setTokens = function() {
 		var sliceStart = appUrl.length + 7;
-		var sliceEnd = sliceStart + 45;
+		var sliceEnd = sliceStart + 89;
 		var currentUrl = $location.absUrl();
 		var query = currentUrl.slice(sliceStart, sliceEnd);
 		return $http({
@@ -166,11 +166,27 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	$scope.startOver = function(){
-		revokeToken();
+		revokeToken()
+			.then(function(res) {
+				clearData()
+					.then(function(res){
+						startOver()
+							.then(function(res) {
+								goHome();
+							});
+					});
+			});
+	};
+
+	let startOver = function(){
 		return $http.put(appUrl + '/startOver')
 					.then(function(res) {
-						$location.path('home');
+						console.log('startOver ran!');
 					})
+	};
+
+	let goHome = function(){
+		$location.path('/');
 	};
 
 	let getEmail = function() {
@@ -183,6 +199,13 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	let sendEmail = function() {
 		return $http.post(appUrl + '/sendEmail')
 					.then(function(res) {
+						console.log(res.data.message);
+					})
+	};
+
+	let clearData = function() {
+		return $http.post(appUrl + '/clearData')
+					.then(function(res){
 						console.log(res.data.message);
 					})
 	};

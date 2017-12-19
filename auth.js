@@ -97,7 +97,7 @@ module.exports = {
 		var code = req.body.code;
 		oauth2Client.getToken(code, function (err, tokens) {
  	 		if (err) {
- 	 			console.log(err);
+ 	 			console.log("set tokens:  ", err);
  	 		} else {
  	 			if (tokens.refresh_token) {
  	 				refreshToken = tokens.refresh_token;
