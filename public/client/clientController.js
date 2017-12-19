@@ -187,12 +187,10 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	$scope.startOver = function(){
+		clearData();
 		revokeToken()
-			.then(function(res) {
-				clearData()
-					.then(function(res){
-						goHome();
-					});
+			.then(function(res){
+				goHome();
 			});
 	};
 

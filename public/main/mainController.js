@@ -28,11 +28,11 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	$scope.startOver = function(){
-		revokeToken();
-		return $http.put(appUrl + '/startOver')
-					.then(function(res) {
-						$location.path('/');
-					})
+		clearData();
+		revokeToken()
+			.then(function(res){
+				goHome();
+			});
 	};
 
 	let sendLinkRequest = function() {
