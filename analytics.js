@@ -1,7 +1,6 @@
 const auth = require('./auth.js');
 const google = auth.google;
 const analytics = google.analytics('v3');
-const data = require('./data.js');
 
 module.exports = {
 	getAnalyticsAccount: function(req, res, next) {
@@ -37,35 +36,6 @@ module.exports = {
 		})
 	},
 
-	// createProperty: function(req, res, next) {
-	// 	analytics.management.webproperties.insert({
-	// 		accountId: accountId,
-	// 		resource: {
-	// 			name: data.inputData.theater,
-	// 			industryVertical: "PEOPLE_AND_SOCIETY",
-	// 			kind: "analytics#webproperty",
-	// 			level: "STANDARD",
-	// 			id: 'UV-' + accountId + '-1',
-	// 			permissions: {
-	// 				effective: ["COLLABORATE", "EDIT", "MANAGE_USERS", "READ_AND_ANALYZE"]
-	// 			},
-	// 			websiteUrl: data.inputData.website
-	// 		}
-	// 	},
-	// 	function(err, response) {
-	// 		if (err) {
-	// 			console.log('create property error: ', err, accountId);
-	// 			res.send({
-	// 				message: 'error creating property'
-	// 			})
-	// 		} else {
-	// 			res.send({
-	// 				message: 'property created Successfully!'
-	// 			})
-	// 		}
-	// 	})
-	// },
-
 	linkAnalytics: function(req, res, next) {
 		analytics.management.webPropertyAdWordsLinks.insert({
 			accountId: accountId,
@@ -73,7 +43,7 @@ module.exports = {
 			resource: {
 				adWordsAccounts: [{
 					kind: "analytics#adWordsAccount",
-					customerId: data.inputData.customerId,
+					customerId: req.body.customerId,
 					autoTaggingEnabled: "true"
 				}]
 			}

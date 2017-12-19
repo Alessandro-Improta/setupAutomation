@@ -41,7 +41,7 @@ module.exports = {
 		tagmanager.accounts.containers.create({
 			parent: 'accounts/' + GTMAccountId,
 			resource: {
-				name: data.inputData.theater,
+				name: req.body.theater,
 				timeZoneCountryId: "US",
 				timeZoneId: "America/Denver",
 				usageContext: ["web"]
@@ -162,7 +162,7 @@ module.exports = {
 					{
 						type: "template",
 						key: "value",
-						value: data.inputData.homePageUrl
+						value: req.body.homePageUrl
 					}
 				]
 			}
@@ -446,7 +446,7 @@ module.exports = {
 							{
 								type: 'template',
 								key: 'arg1',
-								value: data.inputData.website
+								value: req.body.website
 							}
 						]
 					}

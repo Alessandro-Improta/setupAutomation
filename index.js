@@ -16,7 +16,6 @@ app.use(bodyParser.json());
 
 const port = 3000;
 
-app.get('/loggedIn', auth.loggedIn);
 app.get('/firstLogIn', auth.firstLogIn);
 app.get('/secondLogIn', auth.secondLogIn);
 app.get('/template', sheets.getTemplate);
@@ -31,8 +30,6 @@ app.get('/getEmail', gtm.getEmail);
 
 app.put('/tokens', auth.setTokens);
 app.put('/findAndReplace', sheets.findAndReplace);
-app.put('/addData', data.addData);
-app.put('/startOver', auth.startOver);
 
 app.post('/newAccount', sheets.newAccount);
 app.post('/createGTMContainer', gtm.createGTMContainer);
@@ -44,7 +41,6 @@ app.post('/sendLinkRequest', auth.sendLinkRequest);
 app.post('/acceptLinkRequest', auth.acceptLinkRequest);
 app.post('/linkAnalytics', analytics.linkAnalytics);
 app.post('/sendEmail', gtm.sendEmail);
-app.post('/clearData', data.clearData);
 
 app.listen( port, function(){
 	console.log("listening on port " + port);

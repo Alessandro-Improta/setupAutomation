@@ -1,11 +1,7 @@
 angular.module('setupApp').controller('clientController', function($http, $scope, constants, $location){
 
 	const appUrl = constants.appUrl;
-	let inputData;
- 	
- 	let getData = function(){
- 		return inputData = constants.getData();
- 	}
+	let inputData = localStorage;
 
 	let setTokens = function() {
 		var sliceStart = appUrl.length + 7;
@@ -16,7 +12,8 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			method: 'PUT',
 			url: appUrl + '/tokens',
 			data: {
-				code: query
+				code: query,
+				customerId: localStorage.customerId;
 			}
 		})
 			.then(function(res) {
@@ -36,7 +33,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			method: 'POST',
 			url: appUrl + '/newAccount',
 			data: {
-				title: inputData.theater + ".csv"
+				title: inputData.theater 
 			}
 			})
 			.then(function(res) {
@@ -92,10 +89,16 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let createGTMContainer = function() {
-		return $http.post(appUrl + '/createGTMContainer')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
+		return $http.({
+			method: "POST",
+			url: appUrl + '/createGTMContainer',
+			data: {
+				theater: localStorage.theater
+			}
+		})
+		.then(function(res) {
+			console.log(res.data.message);
+		})
 	};
 
 	let getGTMContainer = function() {
@@ -106,13 +109,19 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let createGTMVariables = function() {
-		return $http.post(appUrl + '/createGTMVariables')
-					.then(function(res) {
-						console.log(res.data.message1);
-						console.log(res.data.message2);
-						console.log(res.data.message3);
-						console.log(res.data.message4);
-					})
+		return $http.({
+			method: "POST",
+			url: appUrl + '/createGTMVariables',
+			data: {
+				homePageUrl: localStorage.homePageUrl;
+			}
+		})
+		.then(function(res) {
+			console.log(res.data.message1);
+			console.log(res.data.message2);
+			console.log(res.data.message3);
+			console.log(res.data.message4);
+		})
 	};
 
 	let createGTMTag = function() {
@@ -124,10 +133,16 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let createGTMTrigger = function() {
-		return $http.post(appUrl + '/createGTMTrigger')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
+		return $http.({
+			method: "post",
+			url : appUrl + '/createGTMTrigger',
+			data: {
+				website: localStorage.website
+			}
+		})
+		.then(function(res) {
+			console.log(res.data.message);
+		})
 	};
 
 	let adwordsTest = function() {
@@ -159,10 +174,16 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let linkAnalytics = function() {
-		return $http.post(appUrl + '/linkAnalytics')
-					.then(function(res) {
-
-					})
+		return $http.({
+			method: "POST",
+			url: appUrl + '/linkAnalytics',
+			data: {
+				customerId: localStorage.customerId
+			}
+		})
+		.then(function(res) {
+			console.log(res.data.message);
+		})
 	};
 
 	$scope.startOver = function(){
@@ -170,19 +191,9 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			.then(function(res) {
 				clearData()
 					.then(function(res){
-						startOver()
-							.then(function(res) {
-								goHome();
-							});
+						goHome();
 					});
 			});
-	};
-
-	let startOver = function(){
-		return $http.put(appUrl + '/startOver')
-					.then(function(res) {
-						console.log('startOver ran!');
-					})
 	};
 
 	let goHome = function(){
@@ -204,16 +215,11 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let clearData = function() {
-		return $http.post(appUrl + '/clearData')
-					.then(function(res){
-						console.log(res.data.message);
-					})
+		return localStorage = {};
 	};
 
 	(function(){
 		$scope.show = true;
-		getData()
-			.then(function(res){
 				setTokens()
 					.then(function(res) {
 						uploadCopyOfTemplate()

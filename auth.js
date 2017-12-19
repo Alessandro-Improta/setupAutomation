@@ -3,7 +3,6 @@ const OAuth2 = google.auth.OAuth2;
 const AdwordsUser = require('node-adwords').AdwordsUser;
 const AdwordsConstants = require('node-adwords').AdwordsConstants;
 const axios = require('axios');
-const data = require('./data.js');
 
 
  
@@ -49,8 +48,6 @@ var url = oauth2Client.generateAuthUrl({
 
 var refreshToken;
 let accessToken;
-let loggedIn;
-let loggedInAgain;
 
 //create selector
 
@@ -58,31 +55,18 @@ module.exports = {
 	google: google,
 	adwordsUser: adwordsUser,
 	refreshToken: refreshToken,
-	loggedIn: function(req, res, next) {
-		res.send({
-			loggedIn: loggedIn,
-			loggedInAgain: loggedInAgain
-		});
-	},
 
 	firstLogIn: function(req, res, next) {
-		loggedIn = true;
 		res.send({
 			url: url
 		});
 	},
 
-	startOver: function(req, res, next){
-		loggedIn = false;
-		loggedInAgain = false;
-	},
-
 	secondLogIn: function(req, res, next) {
-		loggedInAgain = true;
 		oauth2Client = new OAuth2(
 		  '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
 		  'D1ht5Wso2vydo5XIKD4_fO3G',
-		  'http://localhost:3000'
+		  'http://fillyourseats.zapto.org:3000'
 		);
 		url = oauth2Client.generateAuthUrl({
 		  access_type: 'offline',
@@ -107,8 +91,11 @@ module.exports = {
     			google.options({
   					auth: oauth2Client
 				});
-				if (data.inputData.customerId) {
-					adwordsUser.credentials.clientCustomerId = data.inputData.customerId;
+				if (req.body.customerId) {
+					let customerId = req.body.customerId;
+					let customerIdArr = customerId.split("");
+					let newCustomerId = customerIdArr[0] + customerIdArr[1] + customerIdArr[2] + '-' + customerIdArr[3] + customerIdArr[4] + customerIdArr[5] + '-' + customerIdArr[6] + customerIdArr[7] + customerIdArr[8] + customerIdArr[9]
+					adwordsUser.credentials.clientCustomerId = newCustomerId;
 				} else {
 					adwordsUser.credentials.clientCustomerId = '790-868-5882'
 				}
