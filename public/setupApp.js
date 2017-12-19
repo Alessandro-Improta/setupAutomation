@@ -8,7 +8,7 @@ angular.module('setupApp', ['ui.router'])
 		$stateProvider
 			.state('home', {
 				url: '/',
-				templateUrl: './login/login.html',
+				templateUrl: './logIn/login.html',
 				controller: 'logIn'
 			})
 			.state('main', {
