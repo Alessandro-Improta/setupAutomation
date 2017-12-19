@@ -1,0 +1,20 @@
+{
+    "apps" : [{
+        "name"        : "Setup Automation",
+        "script"      : "index.js",
+        "env": {
+            "NODE_ENV": "production"
+        }
+    }],
+	"deploy" : {
+		"production" : {
+			"user" : "alessandro",
+			"host" : "fillyourseats.zapto.org",
+			"port" : "3000",
+			"ref"  : "origin/master",
+			"repo" : "https://github.com/Alessandro-Improta/setupAutomation.git",
+			"path" : "/var/www/web-server",
+			"post-deploy" : "npm install && pm2 startOrRestart ecosystem.json --env production"
+		}
+	}
+}
