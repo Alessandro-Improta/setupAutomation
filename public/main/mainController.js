@@ -44,10 +44,16 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let sendLinkRequest = function() {
-		return $http.post(appUrl + '/sendLinkRequest')
-					.then(function(res){
-						console.log(res.data.message);
-					})
+		return $http({
+			method: "POST",
+			url: appUrl + '/sendLinkRequest',
+			data: {
+				customerId: localStorage.customerId
+			}
+		})
+		.then(function(res){
+			console.log(res.data.message);
+		})
 	};
 
 	let adwordsTest = function() {

@@ -153,10 +153,16 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let acceptLinkRequest = function() {
-		return $http.post(appUrl + '/acceptLinkRequest')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
+		return $http.({
+			method: "POST",
+			url: appUrl + '/acceptLinkRequest',
+			data: {
+				customerId: localStorage.customerId
+			}
+		})
+		.then(function(res) {
+			console.log(res.data.message);
+		})
 	};
 
 	let getAnalyticsAccount = function() {

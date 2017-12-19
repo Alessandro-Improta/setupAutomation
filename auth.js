@@ -151,7 +151,7 @@ module.exports = {
 			operator: "ADD",
 			operand: {
 				managerCustomerId: '7908685882',
-				clientCustomerId: data.inputData.customerId,
+				clientCustomerId: req.body.customerId,
 				linkStatus: 'PENDING',
 				pendingDescriptiveName: 'Sent from FYS MCC',
 				isHidden: 'false'
@@ -178,7 +178,7 @@ module.exports = {
 			operator: "SET",
 			operand: {
 				managerCustomerId: '7908685882',
-				clientCustomerId: data.inputData.customerId,
+				clientCustomerId: req.body.customerId,
 				linkStatus: 'ACTIVE',
 				pendingDescriptiveName: 'Sent from FYS MCC',
 				isHidden: 'false'
