@@ -36,11 +36,11 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let clearData = function() {
-		return localStorage = {};
+		return localStorage.clear();
 	};
 
 	let goHome = function(){
-		$location.path('/');
+		$location.path('home');
 	};
 
 	let sendLinkRequest = function() {

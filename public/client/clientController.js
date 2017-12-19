@@ -195,7 +195,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let goHome = function(){
-		$location.path('/');
+		$location.path('home');
 	};
 
 	let getEmail = function() {
@@ -213,7 +213,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let clearData = function() {
-		return localStorage = {};
+		return localStorage.clear();
 	};
 
 	(function(){
