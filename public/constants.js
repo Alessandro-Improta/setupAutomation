@@ -1,6 +1,6 @@
 angular.module('setupApp').service('constants', function($http){
 
-	this.appUrl = 'http://localhost:3000';
+	this.appUrl = '192.168.0.100:3000';
 
 	let inputData = {};
 
