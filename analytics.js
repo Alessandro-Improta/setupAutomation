@@ -44,12 +44,14 @@ module.exports = {
 		function(err, response) {
 			if (err) {
 				res.send({
-					message: err
+					message: 'Error getting profiles',
+					data: err
 				})
 			} else {
 				console.log(response);
 				res.send({
-					message: response
+					message: 'Successfully got profiles!',
+					data: err
 				})
 			}
 		})

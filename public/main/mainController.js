@@ -31,6 +31,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		$http.get(appUrl + '/getProfiles')
 			 .then(function(res) {
 			 	console.log(res.data.message);
+			 	console.log(res.data.data);
 			 })
 	};
 
