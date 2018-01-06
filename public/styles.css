@@ -2,3 +2,13 @@ input {
 	display: block;
 	margin-bottom: 15px;
 }
+
+button {
+	margin-top: 25px;
+	margin-right: 15px;
+}
+
+#wait {
+	display: block;
+	margin: 0 auto;
+}
