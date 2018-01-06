@@ -41,6 +41,7 @@ app.post('/sendLinkRequest', auth.sendLinkRequest);
 app.post('/acceptLinkRequest', auth.acceptLinkRequest);
 app.post('/linkAnalytics', analytics.linkAnalytics);
 app.post('/sendEmail', gtm.sendEmail);
+app.post('/createGoal', analytics.createGoal);
 
 app.listen( port, function(){
 	console.log("listening on port " + port);

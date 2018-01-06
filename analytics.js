@@ -71,7 +71,7 @@ module.exports = {
 				})
 			} else {
 				res.send({
-					message: 'Successfully got profiles!',
+					message: 'Successfully got Goals!',
 					data: response
 				})
 			}
@@ -79,7 +79,45 @@ module.exports = {
 	},
 
 	createGoal: function(req, res, next) {
-		analytics.management.goals.insert()
+		analytics.management.goals.insert({
+			accountId: accountId,
+			profileId: profileId,
+			webPropertyId: webPropertyId,
+			resource: {
+				id: '1',
+				active: 'true',
+				name: 'Buy Btn Click',
+				type: 'EVENT',
+				eventDetails: {
+					eventConditions: [
+						{
+							expression: 'BuyButton',
+							matchType: 'EXACT',
+							type: 'CATEGORY'
+						},
+
+						{
+							expression: 'Click',
+							matchType: 'EXACT',
+							type: 'ACTION'
+						}
+					],
+					useEventValue: 'true'
+				}
+			}
+		},
+		function(err, response) {
+			if (err) {
+				console.log('CREATE GOAL', err);
+				res.send({
+					message: 'Error creating goal',
+				})
+			} else {
+				res.send({
+					message: 'Successfully created goal!',
+				})
+			}
+		})
 	},
 
 	linkAnalytics: function(req, res, next) {

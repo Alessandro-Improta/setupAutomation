@@ -52,12 +52,19 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			})
 	};
 
+	let createGoal = function() {
+		return $http.post(appUrl + '/createGoal')
+			.then(function(res) {
+				console.log(res.data.message);
+			})
+	};
+
 	$scope.getProfiles = function() {
 		getAnalyticsAccount()
 			.then(function(res) {
 				getProfiles()
 					.then(function(res) {
-						getGoals();
+						createGoal();
 					});
 			});
 	};
