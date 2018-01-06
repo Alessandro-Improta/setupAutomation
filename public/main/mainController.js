@@ -59,13 +59,23 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			})
 	};
 
+	let getWebProperties = function() {
+		return $http.get(appUrl + '/webProperties')
+					.then(function(res) {
+						console.log(res.data.message);
+					})
+	};
+
 	$scope.getProfiles = function() {
 		getAnalyticsAccount()
 			.then(function(res) {
-				getProfiles()
+				getWebProperties()
 					.then(function(res) {
-						createGoal();
-					});
+						getProfiles()
+							.then(function(res) {
+								createGoal();
+							});
+					})
 			});
 	};
 
