@@ -4,7 +4,7 @@ const sheets = google.sheets('v4');
 
 module.exports = {
 	getTemplate: function(req, res, next) {
-		if (req.body.templateId !== "undefined") {
+		if (req.body.templateId !== undefined) {
 			let templateId = req.body.templateId;
 		} else {
 			let templateId = '13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE';
