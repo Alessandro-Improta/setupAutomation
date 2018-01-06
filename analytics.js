@@ -49,7 +49,7 @@ module.exports = {
 					data: err
 				})
 			} else {
-				console.log('get Profiles' response);
+				console.log('get Profiles', response);
 				res.send({
 					message: 'Successfully got profiles!',
 					data: response
