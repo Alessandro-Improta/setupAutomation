@@ -46,16 +46,36 @@ module.exports = {
 				console.log('get Profiles', err);
 				res.send({
 					message: 'Error getting profiles',
+				})
+			} else {
+				profileId = response.items[0].id;
+				res.send({
+					message: 'Successfully got profiles!',
+				})
+			}
+		})
+	},
+
+	getGoals: function(req, res, next) {
+		analytics.management.goals.list({
+			accountId: accountId,
+			profileId: '~all',
+			webPropertyId: '~all'
+		},
+		function(err, response) {
+			if (err) {
+				console.log('GET GOALS', err);
+				res.send({
+					message: 'Error getting goals',
 					data: err
 				})
 			} else {
-				console.log('get Profiles', response);
 				res.send({
 					message: 'Successfully got profiles!',
 					data: response
 				})
 			}
-		})
+		});
 	},
 
 	createGoal: function(req, res, next) {
@@ -91,3 +111,4 @@ module.exports = {
 
 let accountId;
 let webPropertyId;
+let profileId;

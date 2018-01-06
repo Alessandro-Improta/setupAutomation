@@ -132,7 +132,7 @@ module.exports = {
 					{
 						type: "template",
 						key: "value",
-						value: "UA-96460295-x"
+						value: "UA-96460295-17"
 					}
 				]
 			}

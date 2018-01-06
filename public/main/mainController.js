@@ -41,14 +41,24 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		return $http.get(appUrl + '/getProfiles')
 			.then(function(res) {
 			 	console.log(res.data.message);
-			 	console.log(res.data.data);
 			 })
-	}
+	};
+
+	let getGoals = function() {
+		return $http.get(appUrl + '/getGoals')
+			.then(function(res) {
+				console.log(res.data.message);
+				console.log(res.data.data);
+			})
+	};
 
 	$scope.getProfiles = function() {
 		getAnalyticsAccount()
 			.then(function(res) {
-				getProfiles();
+				getProfiles()
+					.then(function(res) {
+						getGoals();
+					});
 			});
 	};
 
