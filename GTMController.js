@@ -1,7 +1,6 @@
 const auth = require('./auth.js');
 const google = auth.google;
 const tagmanager = google.tagmanager('v2');
-const data = require('./data.js');
 const gmail = google.gmail('v1');
 const people = google.people('v1');
 const btoa = require('btoa');
