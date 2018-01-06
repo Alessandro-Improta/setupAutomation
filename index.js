@@ -4,7 +4,6 @@ const google = require('googleapis');
 const auth = require('./auth.js');
 const gtm = require('./GTMController.js');
 const sheets = require('./sheetsController.js');
-const data = require('./data.js');
 const analytics = require('./analytics.js');
 
 
