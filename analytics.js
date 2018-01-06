@@ -30,10 +30,33 @@ module.exports = {
 			} else {
 				webPropertyId = response.items[0].id;
 				res.send({
-					message: 'retrived webp roperties Successfully!'
+					message: 'retrived web properties Successfully!'
 				})
 			}
 		})
+	},
+
+	getProfiles: function(req, res, next) {
+		analytics.management.profiles.list({
+			accountId: accountId,
+			webPropertyId: '~all'
+		},
+		function(err, response) {
+			if (err) {
+				res.send({
+					message: 'Error getting profiles'
+				})
+			} else {
+				console.log(response);
+				res.send({
+					message: 'Successfully got profiles!'
+				})
+			}
+		})
+	},
+
+	createGoal: function(req, res, next) {
+		analytics.management.goals.insert()
 	},
 
 	linkAnalytics: function(req, res, next) {

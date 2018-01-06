@@ -4,8 +4,13 @@ const sheets = google.sheets('v4');
 
 module.exports = {
 	getTemplate: function(req, res, next) {
+		if (req.body.templateId) {
+			let templateId = req.body.templateId;
+		} else {
+			let templateId = '13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE';
+		}
 		sheets.spreadsheets.get({
-  			spreadsheetId: '13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE',
+  			spreadsheetId: templateId,
   			ranges: [],
   			includeGridData: true
 		}, function (err, response) {

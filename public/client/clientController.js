@@ -44,11 +44,18 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	let findAndReplace = function() {
 		let requests = []
 		let replaceItems = [];
-		const findItems    = ['{Theatre Name}', '{Name Short}', '{City}', '{State}']
+		const findItems    = ['{Theatre Name}', '{Name Short}', '{City}', '{State}', 'http://www.fillyourseats.com', 'http://www.fillyourseats.com/contact-us', 'http://www.fillyourseats.com/ugly', 'http://www.fillyourseats.com/subscribe-w-stripe', 'http://www.fillyourseats.com/contact', 'http://www.fillyourseats.com/details']
 		replaceItems.push(inputData.theater);
 		replaceItems.push(inputData.theater);
 		replaceItems.push(inputData.city);
 		replaceItems.push(inputData.state);
+		replaceItems.push(inputData.website);
+		replaceItems.push(inputData.buyTicketsUrl);
+		replaceItems.push(inputData.aboutUrl);
+		replaceItems.push(inputData.directionUrl);
+		replaceItems.push(inputData.buyTicketsUrl);
+		replaceItems.push(inputData.buyTicketsUrl);
+
 		let fillRequestsArray = function () {
 			for (let i = 0; i < findItems.length; i++) {
 				requests.push({

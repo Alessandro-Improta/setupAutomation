@@ -8,8 +8,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
 		$scope.show1 = true;
-		let keys = ['theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
-		let values = [$scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
+		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
+		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		setTokens()
 			.then(function(res){
 				addData(keys, values);
@@ -25,6 +25,13 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 							});
 					});
 			});
+	};
+
+	$scope.getProfiles = function() {
+		$http.get(appUrl + '/getProfiles')
+			 .then(function(res) {
+			 	console.log(res.data.message);
+			 })
 	};
 
 	$scope.startOver = function(){
@@ -56,13 +63,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		})
 	};
 
-	let adwordsTest = function() {
-		return $http.get(appUrl + '/test')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
-	};
-
 	let getAdwordsAccount = function() {
 		return $http.get(appUrl + '/adwordsAccount')
 					.then(function(res) {
@@ -85,10 +85,16 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let getTemplate = function() {
-		return $http.get(appUrl + '/template')
-					.then(function(res){
-						console.log(res.data.message);
-					})
+		return $http({
+			method: "GET",
+			url: appUrl + '/template',
+			data: {
+				templateId: localStorage.templateId
+			}
+		})
+		.then(function(res){
+			console.log(res.data.message);
+		})
 	};
 
 	let setTokens = function() {

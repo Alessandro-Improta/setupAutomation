@@ -27,6 +27,7 @@ app.get('/analyticsAccount', analytics.getAnalyticsAccount);
 app.get('/getVariables', gtm.getVariables);
 app.get('/webProperties', analytics.getWebProperties);
 app.get('/getEmail', gtm.getEmail);
+app.get('/getProfiles', analytics.getProfiles);
 
 app.put('/tokens', auth.setTokens);
 app.put('/findAndReplace', sheets.findAndReplace);
