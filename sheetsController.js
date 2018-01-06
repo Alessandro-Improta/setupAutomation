@@ -4,10 +4,9 @@ const sheets = google.sheets('v4');
 
 module.exports = {
 	getTemplate: function(req, res, next) {
+		let templateId = '13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE';
 		if (req.body.templateId !== undefined) {
-			let templateId = req.body.templateId;
-		} else {
-			let templateId = '13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE';
+			templateId = req.body.templateId;
 		}
 		sheets.spreadsheets.get({
   			spreadsheetId: templateId,
