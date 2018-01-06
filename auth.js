@@ -25,6 +25,7 @@ let oauth2Client = new OAuth2(
 var scopes = [
   'https://www.googleapis.com/auth/tagmanager.edit.containers', 
   'https://www.googleapis.com/auth/analytics',
+  'https://www.googleapis.com/auth/analytics.edit',
   'https://www.googleapis.com/auth/analytics.manage.users',
   'https://www.googleapis.com/auth/analytics.provision',
   'https://www.googleapis.com/auth/spreadsheets', 
