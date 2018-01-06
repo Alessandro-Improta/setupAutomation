@@ -229,6 +229,20 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		return localStorage.clear();
 	};
 
+	let getProfiles = function() {
+		return $http.get(appUrl + '/getProfiles')
+			.then(function(res) {
+			 	console.log(res.data.message);
+			 })
+	};
+
+	let createGoal = function() {
+		return $http.post(appUrl + '/createGoal')
+			.then(function(res) {
+				console.log(res.data.message);
+			})
+	};
+
 	(function(){
 		$scope.show = true;
 				setTokens()
@@ -257,10 +271,16 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 																											.then(function(res){
 																												getWebProperties()
 																													.then(function(res){
-																														$scope.show = false;
-																														linkAnalytics()
+																														getProfiles()
 																															.then(function(res){
-																																createGTMVariables()
+																																createGoal()
+																																	.then(function(res){
+																																		$scope.show = false;
+																																		linkAnalytics()
+																																			.then(function(res){
+																																				createGTMVariables()
+																																			})
+																																	})
 																															})
 																													})
 																											})

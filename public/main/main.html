@@ -1,20 +1,22 @@
 <div ng-show="show">
-	Template ID if not using the main template<input ng-model="templateId">
-	Theater<input ng-model="theater">
-	City<input ng-model="city">
-	State<input ng-model="state">
-	Website<input ng-model="website">
-	Customer ID with no dashes<input ng-model="customerId">
-	Homepage URL<input ng-model="homePageUrl">
-	About URL<input ng-model="aboutUrl">
-	Directions URL<input ng-model="directionsUrl">
-	Buy Tickets URL<input ng-model="buyTicketsUri">
-	Address of Theater<input ng-model="addressOfTheater">
-	External Ticketing URL<input ng-model="conversionUrl">
-	Avg. Ticket Price (<input ng-model="conversionValue">
+	<input ng-hide="linking" ng-model="templateId" placeholder="Template ID if not using the main template">
+	<input ng-hide="linking" ng-model="theater" placeholder="Theater">
+	<input ng-hide="linking" ng-model="city" placeholder="City">
+	<input ng-hide="linking" ng-model="state" placeholder="State">
+	<input ng-hide="linking" ng-model="website" placeholder="Website">
+	<input ng-model="customerId" placeholder="Customer ID with no dashes">
+	<input ng-hide="linking" ng-model="homePageUrl" placeholder="Homepage URL">
+	<input ng-hide="linking" ng-model="aboutUrl" placeholder="About URL">
+	<input ng-hide="linking" ng-model="directionsUrl" placeholder="Directions URL">
+	<input ng-hide="linking" ng-model="buyTicketsUri" placeholder="Buy Tickets URL">
+	<input ng-hide="linking" ng-model="addressOfTheater" placeholder="Address of Theater">
+	<input ng-hide="linking" ng-model="conversionUrl" placeholder="External Ticketing URL">
+	<input ng-hide="linking" ng-model="conversionValue" placeholder="Avg. Ticket Price">
 
 	<button ng-click="mainAccountActions()">Do It!</button>
 	<button ng-click="startOver()">Logged into the wrong account? Try again.</button>
+	<button ng-click="getCustomerId()">Just Linking accounts?</button>
+	<button ng-show="linking" ng-click="relink()">Send Link</button>
 </div>
 
 <div ng-show="show1">

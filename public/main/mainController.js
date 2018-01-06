@@ -10,18 +10,15 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		$scope.show1 = true;
 		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
 		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
-		setTokens()
+		addData(keys, values);
+		sendLinkRequest()
 			.then(function(res){
-				addData(keys, values);
-				sendLinkRequest()
+				getTemplate()
 					.then(function(res){
-						getTemplate()
+						revokeToken()
 							.then(function(res){
-								revokeToken()
-									.then(function(res){
-										$scope.show1 = false;
-										$scope.show2 = true;
-									});
+								$scope.show1 = false;
+								$scope.show2 = true;
 							});
 					});
 			});
@@ -29,6 +26,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 
 // The following functions are for testing and can be erased when done.
+// *************************************************************************************
 
 	let getAnalyticsAccount = function() {
 		return $http.get(appUrl + '/analyticsAccount')
@@ -83,7 +81,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		setTokens();
 	}
 
-//
+// *************************************************************************************
 	$scope.startOver = function(){
 		clearData();
 		revokeToken()
@@ -91,6 +89,27 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 				goHome();
 			});
 	};
+
+	$scope.secondLogIn = function() {
+		secondLogIn();
+	}
+
+	$scope.relink = function() {
+		localStorage.setItem('customerId', $scope.customerId);
+		sendLinkRequest()
+			.then(function(res){
+				revokeToken()
+					.then(function(res){
+						secondLogIn();
+					})
+			});
+	};
+
+	$scope.linking = false;
+
+	$scope.getCustomerId = function() {
+		$scope.linking = true;
+	}
 
 	let clearData = function() {
 		return localStorage.clear();
@@ -164,7 +183,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			})
 	};
 
-	$scope.secondLogIn = function() {
+	let secondLogIn = function() {
 		return $http.get(appUrl + '/secondLogIn')
     				.then(function(res){
     					localStorage.setItem("loggedInAgain", "true");
@@ -173,4 +192,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
     				});
 	};
 
+	(function(){
+		setTokens();
+	})()
 });
