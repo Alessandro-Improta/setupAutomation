@@ -35,6 +35,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			 })
 	};
 
+	$scope.setTokens = function() {
+		setTokens();
+	}
+
 	$scope.startOver = function(){
 		clearData();
 		revokeToken()
