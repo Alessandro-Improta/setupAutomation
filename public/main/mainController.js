@@ -24,64 +24,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			});
 	};
 
-
-// The following functions are for testing and can be erased when done.
-// *************************************************************************************
-
-	let getAnalyticsAccount = function() {
-		return $http.get(appUrl + '/analyticsAccount')
-			.then(function(res) {
-				console.log(res.data.message);
-			})
-	};
-
-	let getProfiles = function() {
-		return $http.get(appUrl + '/getProfiles')
-			.then(function(res) {
-			 	console.log(res.data.message);
-			 })
-	};
-
-	let getGoals = function() {
-		return $http.get(appUrl + '/getGoals')
-			.then(function(res) {
-				console.log(res.data.message);
-				console.log(res.data.data);
-			})
-	};
-
-	let createGoal = function() {
-		return $http.post(appUrl + '/createGoal')
-			.then(function(res) {
-				console.log(res.data.message);
-			})
-	};
-
-	let getWebProperties = function() {
-		return $http.get(appUrl + '/webProperties')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
-	};
-
-	$scope.getProfiles = function() {
-		getAnalyticsAccount()
-			.then(function(res) {
-				getWebProperties()
-					.then(function(res) {
-						getProfiles()
-							.then(function(res) {
-								createGoal();
-							});
-					})
-			});
-	};
-
-	$scope.setTokens = function() {
-		setTokens();
-	}
-
-// *************************************************************************************
 	$scope.startOver = function(){
 		clearData();
 		revokeToken()
@@ -98,6 +40,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		localStorage.setItem('customerId', $scope.customerId);
 		sendLinkRequest()
 			.then(function(res){
+				localStorage.setItem('justLinking', true);
 				revokeToken()
 					.then(function(res){
 						secondLogIn();

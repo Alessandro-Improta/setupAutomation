@@ -13,9 +13,9 @@
 	<input ng-hide="linking" ng-model="conversionUrl" placeholder="External Ticketing URL">
 	<input ng-hide="linking" ng-model="conversionValue" placeholder="Avg. Ticket Price">
 
-	<button ng-click="mainAccountActions()">Do It!</button>
-	<button ng-click="startOver()">Logged into the wrong account? Try again.</button>
-	<button ng-click="getCustomerId()">Just Linking accounts?</button>
+	<button ng-hide="linking" ng-click="mainAccountActions()">Do It!</button>
+	<button ng-hide="linking" ng-click="startOver()">Logged into the wrong account? Try again.</button>
+	<button ng-hide="linking" ng-click="getCustomerId()">Just Linking accounts?</button>
 	<button ng-show="linking" ng-click="relink()">Send Link</button>
 </div>
 
@@ -26,6 +26,3 @@
 <div ng-show="show2">
 	<button ng-click="secondLogIn()">Log Into Client Account</button>
 </div>
-
-<button ng-click="setTokens()">Set Tokens</button>
-<button ng-click="getProfiles()">Get Profiles</button>
