@@ -198,5 +198,32 @@ module.exports = {
 				})
 			}
 		})
+	},
+
+	endLink: function(req, res, next) {
+		let managedCustomerService = adwordsUser.getService('ManagedCustomerService');
+		let linkOperation = [{
+			operator: "SET",
+			operand: {
+				managerCustomerId: '7908685882',
+				clientCustomerId: req.body.customerId,
+				linkStatus: 'INACTIVE',
+				pendingDescriptiveName: 'Sent from FYS MCC',
+				isHidden: 'false'
+			}
+		}];
+		managedCustomerService.mutateLink({operations: linkOperation}, function(err, response) {
+			if (err) {
+				// console.log(err);
+				res.send({
+					message: 'error terminating link'
+				})
+			} else {
+				// console.log(response);
+				res.send({
+					message: 'Link terminated!'
+				})
+			}
+		})
 	}
 }

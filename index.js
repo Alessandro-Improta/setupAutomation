@@ -39,6 +39,7 @@ app.post('/createGTMTrigger', gtm.createGTMTrigger);
 app.post('/revokeToken', auth.revokeToken);
 app.post('/sendLinkRequest', auth.sendLinkRequest);
 app.post('/acceptLinkRequest', auth.acceptLinkRequest);
+app.post('/endLink', auth.endLink);
 app.post('/linkAnalytics', analytics.linkAnalytics);
 app.post('/sendEmail', gtm.sendEmail);
 app.post('/createGoal', analytics.createGoal);
