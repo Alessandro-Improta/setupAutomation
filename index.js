@@ -20,7 +20,6 @@ app.get('/secondLogIn', auth.secondLogIn);
 app.get('/template', sheets.getTemplate);
 app.get('/getTagManagerAccount', gtm.getTagManagerAccount);
 app.get('/getGTMContainer', gtm.getGTMContainer);
-app.get('/data', data.getInputData);
 app.get('/adwordsAccount', auth.getAdwordsAccount)
 app.get('/analyticsAccount', analytics.getAnalyticsAccount);
 app.get('/getVariables', gtm.getVariables);
