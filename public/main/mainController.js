@@ -27,18 +27,36 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			});
 	};
 
-	$scope.getProfiles = function() {
-		$http.get(appUrl + '/getProfiles')
-			 .then(function(res) {
+
+// The following functions are for testing and can be erased when done.
+
+	let getAnalyticsAccount = function() {
+		return $http.get(appUrl + '/analyticsAccount')
+			.then(function(res) {
+				console.log(res.data.message);
+			})
+	};
+
+	let getProfiles = function() {
+		return $http.get(appUrl + '/getProfiles')
+			.then(function(res) {
 			 	console.log(res.data.message);
 			 	console.log(res.data.data);
 			 })
+	}
+
+	$scope.getProfiles = function() {
+		getAnalyticsAccount()
+			.then(function(res) {
+				getProfiles();
+			});
 	};
 
 	$scope.setTokens = function() {
 		setTokens();
 	}
 
+//
 	$scope.startOver = function(){
 		clearData();
 		revokeToken()
