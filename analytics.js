@@ -43,15 +43,16 @@ module.exports = {
 		},
 		function(err, response) {
 			if (err) {
+				console.log('get Profiles', err);
 				res.send({
 					message: 'Error getting profiles',
 					data: err
 				})
 			} else {
-				console.log(response);
+				console.log('get Profiles' response);
 				res.send({
 					message: 'Successfully got profiles!',
-					data: err
+					data: response
 				})
 			}
 		})
