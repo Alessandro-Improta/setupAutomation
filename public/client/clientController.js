@@ -200,11 +200,14 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	$scope.startOver = function(){
-		clearData();
-		revokeToken()
-			.then(function(res){
-				goHome();
-			});
+		endLink()
+			.then(function(res) {		
+				clearData();
+				revokeToken()
+					.then(function(res){
+						goHome();
+					});
+			})
 	};
 
 	let goHome = function(){
@@ -243,54 +246,64 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			})
 	};
 
+	let endLink = function() {
+		return $http({
+			method: 'POST',
+			url: appUrl + '/endLink',
+			data: {
+				customerId: localStorage.customerId
+			}
+		})
+		.then(function(res) {
+			console.log(res.data.message);
+		})
+	};
+
 	(function(){
 		$scope.show = true;
-				setTokens()
-					.then(function(res) {
-						if (localStorage.justLinking) {
-							acceptLinkRequest()
-								.then(function(res){
+		setTokens()
+			.then(function(res) {
+
+				if (localStorage.justLinking) {
+					acceptLinkRequest()
+						.then(function(res){
+							linkAnalytics()
+								.then(function(res){		
 									localStorage.clear();
 									$scope.show = false;
 									revokeToken();
 									return;
-								});
-						}
-						uploadCopyOfTemplate()
+								})
+						});
+				}
+				getTagManagerAccount()
+					.then(function(res){
+						createGTMContainer()
 							.then(function(res) {
-								findAndReplace()
+								getGTMContainer()
 									.then(function(res) {
-										getTagManagerAccount()
-											.then(function(res){
-												createGTMContainer()
-													.then(function(res) {
-														getGTMContainer()
-															.then(function(res) {
-																getEmail()
-																	.then(function(res) {
-																		sendEmail()
+										getEmail()
+											.then(function(res) {
+												sendEmail()
+													.then(function(res){
+														createGTMTrigger()
+															.then(function(res){
+																createGTMTag()
+																	.then(function(res){
+																		acceptLinkRequest()
 																			.then(function(res){
-																				createGTMTrigger()
+																				getAnalyticsAccount()
 																					.then(function(res){
-																						createGTMTag()
+																						getWebProperties()
 																							.then(function(res){
-																								acceptLinkRequest()
+																								getProfiles()
 																									.then(function(res){
-																										getAnalyticsAccount()
+																										createGoal()
 																											.then(function(res){
-																												getWebProperties()
+																												$scope.show = false;
+																												linkAnalytics()
 																													.then(function(res){
-																														getProfiles()
-																															.then(function(res){
-																																createGoal()
-																																	.then(function(res){
-																																		$scope.show = false;
-																																		linkAnalytics()
-																																			.then(function(res){
-																																				createGTMVariables()
-																																			})
-																																	})
-																															})
+																														createGTMVariables()						
 																													})
 																											})
 																									})
@@ -304,6 +317,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 									})
 							})
 					})
+			})
 	})();
 
 })

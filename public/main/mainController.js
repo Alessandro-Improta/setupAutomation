@@ -17,24 +17,9 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId) {
-					createNewAccountSpreadsheetsFromCustomTemplate()
-						.then(function(res) {
-							revokeToken()
-								.then(function(res){
-									$scope.show1 = false;
-									$scope.show2 = true;
-								});
-						})
+					createNewAccountSpreadsheetsFromCustomTemplate();
 				} else {
-					createNewAccountSpreadsheets()
-						.then(function(res) {
-							console.log(csvs);
-							revokeToken()
-								.then(function(res){
-									$scope.show1 = false;
-									$scope.show2 = true;
-								});
-						})
+					createNewAccountSpreadsheets();
 				}
 			})
 	};
@@ -90,13 +75,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		})
 	};
 
-	let getAdwordsAccount = function() {
-		return $http.get(appUrl + '/adwordsAccount')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
-	};
-
 	let revokeToken = function() {
 		return $http.post(appUrl + '/revokeToken')
 					.then(function(res){
@@ -130,7 +108,11 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 							.then(function(res) {
 								getCsvData()
 									.then(function(res) {
-										return console.log('You now have CSV data for the new account.');;
+										revokeToken()
+											.then(function(res){
+												$scope.show1 = false;
+												$scope.show2 = true;
+											});
 									})
 							});
 					});
@@ -149,7 +131,11 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 								.then(function(res) {
 									getCsvData()
 										.then(function(res) {
-											return console.log('You now have CSV data for the new account.');
+											revokeToken()
+												.then(function(res){
+													$scope.show1 = false;
+													$scope.show2 = true;
+												});
 										})
 								})
 						});
