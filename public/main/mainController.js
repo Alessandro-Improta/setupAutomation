@@ -129,7 +129,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 					.then(function(res) {
 						findAndReplace()
 							.then(function(res) {
-								getCsvData();
+								getCsvData()
+									.then(function(res) {
+										return;
+									})
 							});
 					});
 			});
@@ -145,7 +148,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 						.then(function(res){
 							findAndReplace()
 								.then(function(res) {
-									getCsvData();
+									getCsvData()
+										.then(function(res) {
+											return;
+										})
 								})
 						});
 				});
