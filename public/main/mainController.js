@@ -35,6 +35,18 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			})
 	};
 
+	//TESTING
+	//*********************************************
+	$scope.testTemplate = function() {
+		getTemplate('1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic');
+	};
+
+	$scope.testUpload = function () {
+		uploadCopyOfTemplate();
+	};
+
+	//*********************************************
+
 	$scope.startOver = function(){
 		clearData();
 		revokeToken()
