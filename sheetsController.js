@@ -9,7 +9,7 @@ let csv;
 
 module.exports = {
 	getTemplate: function(req, res, next) {
-		console.log('req body ', req.body);
+		console.log('got template was called');
 		sheets.spreadsheets.get({
 	  		spreadsheetId: req.body.templateId,
 	 		ranges: [],
@@ -31,6 +31,7 @@ module.exports = {
 	},
 
 	newAccount: function(req, res, next) {
+		console.log('upload copy was called');
 		let title = req.body.title;
 		template.properties.title = title;
 		let resource = template;
@@ -54,6 +55,7 @@ module.exports = {
 	},
 
 	findAndReplace: function(req, res, next) {
+		console.log('find and replace was called');
 		let batchUpdateRequest = req.body.requests;
 		sheets.spreadsheets.batchUpdate({
 			spreadsheetId: newSpreadsheetId,
@@ -74,6 +76,7 @@ module.exports = {
 	},
 
 	getCsvData: function (req, res, next) {
+		console.log('get csv data was called');
 		drive.files.export({
 			fileId: newSpreadsheetId,
 			mimeType: 'text/csv'
