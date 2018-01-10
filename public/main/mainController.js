@@ -6,8 +6,17 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.show2 = false;
 	let inputData;
 	let csvs = [];
+	const templateIds = {
+		1: '1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk',
+		2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
+		3: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic'
+	}
+	let templatesArr = [];
+	for (const prop in templateIds) {
+		templatesArr.push(templateIds[prop]);
+	}
 
-	console.log($scope.templateId);
+	console.log(typeof $scope.templateId, templatesArr);
 
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
@@ -18,7 +27,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		inputData = localStorage;
 		sendLinkRequest()
 			.then(function(res){
-				if (localStorage.templateId === undefined) {
+				if (localStorage.templateId === 'undefined') {
 					createNewAccountSpreadsheets();
 				} else {
 					createNewAccountSpreadsheetsFromCustomTemplate();
@@ -90,16 +99,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		}
 		return console.log(localStorage);
 	};
-
-	const templateIds = {
-		1: '1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk',
-		2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
-		3: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic'
-	}
-	let templatesArr = [];
-	for (const prop in templateIds) {
-		templatesArr.push(templateIds[prop]);
-	}
 
 	let createNewAccountSpreadsheetsFromCustomTemplate = function() {
 		getTemplate(localStorage.templateId)
