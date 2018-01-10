@@ -24,6 +24,32 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			});
 	};
 
+	//testing
+	//*********
+		$scope.getTemplate = function() {
+			getTemplate()
+		};
+
+		$scope.upload = function() {
+			return $http({
+				method: 'POST',
+				url: appUrl + '/newAccount',
+				data: {
+					title: inputData.theater 
+				}
+				})
+				.then(function(res) {
+					console.log(res.data.message)
+				})
+		};
+
+		$scope.getCsv = function() {
+			downloadNewAccount();
+		};
+
+
+	//*****
+
 	$scope.startOver = function(){
 		clearData();
 		revokeToken()
@@ -134,6 +160,35 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
     					$window.location.href = redirectUrl;
     				});
 	};
+
+
+	let downloadNewAccount = function() {
+		return $http.get(appUrl + '/downloadNewAccount')
+					.then(function(res) {
+						console.log(res.data.message);
+						csvs = res.data.data;
+						downloadCSV('1.csv', csvs[0]);
+					})
+	};
+
+	$scope.downloadCSV = function (filename, data) {  
+       	
+        var csv = data;
+
+        let filename = filename + '.csv' || 'export.csv';
+
+        if (!csv.match(/^data:text\/csv/i)) {
+            csv = 'data:text/csv;charset=utf-8,' + csv;
+        }
+        let preparedData = encodeURI(csv);
+
+        let link = document.createElement('a');
+        link.setAttribute('href', preparedData);
+        link.setAttribute('download', filename);
+        link.click();
+    };
+
+
 
 	(function(){
 		setTokens();

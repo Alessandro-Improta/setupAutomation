@@ -1,63 +1,177 @@
 const auth = require('./auth.js');
 const google = auth.google;
 const sheets = google.sheets('v4');
+const drive = google.drive('v3');
+
+let template;
+let templates = {};
+let newSpreadsheetIds = {};
+let newSpreadsheetId;
+let csvs = [];
+const templateIds = {
+	id1: '1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk',
+	id2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
+	id3: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic'
+}
+let templatesArr;
+for (const prop in templateIds) {
+	templatesArr.push(templateIds[prop]);
+}
+
 
 module.exports = {
 	getTemplate: function(req, res, next) {
-		let templateId = '13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE';
-		if (req.body.templateId !== undefined) {
-			templateId = req.body.templateId;
+		const getTemplate = function(templateId, num) {
+			sheets.spreadsheets.get({
+	  			spreadsheetId: templateId,
+	  			ranges: [],
+	  			includeGridData: true
+			}, function (err, response) {
+		  		if(err) {
+		  			res.send({
+		  				message: err
+		  			})
+		  		} else {
+		  			if (num){
+		  				templates[num] = response;	
+		  				res.send({
+							message: 'Got Template' + num
+						});
+		  			} else {
+		  				template = response;
+		  				res.send({
+							message: 'Got Template'
+						});
+		  			}
+		  		}
+			})
 		}
-		sheets.spreadsheets.get({
-  			spreadsheetId: templateId,
-  			ranges: [],
-  			includeGridData: true
-		}, function (err, response) {
-  			if(err) {
-  				res.send({
-  					message: err
-  				})
-  			} else {
-  				template = response;
-  				res.send({
-					message: 'Got Template'
-				});
-  			}
-		})
+		
+		if (req.body.templateId !== undefined) {
+			let templateId = req.body.templateId;
+			getTemplate(templateId);
+		} else {
+			for(let i = 0; i < templatesArr.length; i++) {
+				let num = i + 1;
+				getTemplate(templatesArr[i], num);
+			}
+		}
 	},
 
 	newAccount: function(req, res, next) {
-		template.properties.title = req.body.title;
-		sheets.spreadsheets.create({
-			resource: template
-		}, function(err, response){
-			if (err) {
-				console.error(err);
-				return;
+		const uploadTemplateCopy = function(num) {
+			let resource;
+			let title;
+			if (num) {
+				title = req.body.title + num;
+				templates[num].properties.title = title;
+				resource = templates[num];
+			} else {
+				title = req.body.title;
+				template.properties.title = req.body.title;
+				resource = template;
 			}
-			newSpreadsheetId = response.spreadsheetId;
-			res.send({
-				message: 'successful Post!'
-			});
-		})
+
+			
+			sheets.spreadsheets.create({
+				resource: resource
+			}, 
+			function(err, response){
+				if (err) {
+					console.error(title err);
+					res.send({
+						message: 'Error uploading template copy ' + title
+					})
+				} else {
+					if (num) {
+						newSpreadsheetIds[num] = response.spreadsheetId;	
+					} else {
+						newSpreadsheetId = response.spreadsheetId;
+					}
+					res.send({
+						message: 'successfully posted ' + title + '!'
+					});
+				}
+			})
+		};
+
+		if (template) {
+			uploadTemplateCopy()
+		} else {
+			for(const prop in templates) {
+				uploadTemplateCopy(prop);
+			}
+		}
 	},
 
 	findAndReplace: function(req, res, next) {
-		batchUpdateRequest = req.body.requests;
-		sheets.spreadsheets.batchUpdate({
-		  spreadsheetId: newSpreadsheetId,
-		  resource: batchUpdateRequest
-		}, function(err, response) {
-			if(err) {
-				console.log(err);
-			} else {
-				res.send({
-					message: 'Find and replace successful!'
-				});
-		  	}
-		  });
+		const findAndReplace = function(id) {
+			batchUpdateRequest = req.body.requests;
+			sheets.spreadsheets.batchUpdate({
+			  spreadsheetId: id,
+			  resource: batchUpdateRequest
+			}, 
+			function(err, response) {
+				if(err) {
+					console.log(err);
+				} else {
+					res.send({
+						message: 'Find and replace successful!'
+					});
+			  	}
+			});
+		}
+
+		if (newSpreadsheetId) {
+			findAndReplace(newSpreadsheetId);
+		} else{
+			for(const prop in newSpreadsheetIds) {
+				findAndReplace(newSpreadsheetIds[prop]);
+			}
+		}
+	},
+
+	downloadNewAccount: function (req, res, next) {
+		if (newSpreadsheetId) {
+			drive.files.export({
+				fileId: newSpreadsheetId,
+				mimeType: 'text/csv'
+			},
+			function(err, response) {
+				if (err) {
+					console.log('downloadNewAccount' err);
+					res.send({
+						message: "error downloading csv",
+						data: ''
+					})
+				} else {
+					console.log(response);		
+					res.send({
+						message: "successfully downloaded csv",
+						data: [response]
+					})
+				}
+			})
+
+		} else {
+
+			for(const prop in newSpreadsheetIds) {
+				drive.files.export({
+					fileId: newSpreadsheetIds[prop],
+					mimeType: 'text/csv'
+				},
+				function(err, response){
+					if (err) {
+						console.log('downloadNewAccount' err);
+					} else {
+						csvs.push(response);
+					}
+				})
+			}
+			res.send({
+				message: 'successfully downloaded all csvs'
+				data: csvs
+			})
+		}	
 	}
 }
-
-var template;
-var newSpreadsheetId;
