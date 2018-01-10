@@ -13,7 +13,7 @@ const templateIds = {
 	id2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
 	id3: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic'
 }
-let templatesArr;
+let templatesArr = [];
 for (const prop in templateIds) {
 	templatesArr.push(templateIds[prop]);
 }
