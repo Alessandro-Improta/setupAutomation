@@ -30,11 +30,13 @@ module.exports = {
 	  			includeGridData: true
 			}, function (err, response) {
 		  		if(err) {
+		  			console.log('getTemplate ', err);
 		  			res.send({
 		  				message: err
 		  			})
 		  		} else {
 		  			if (num){
+		  				console.log('getTemplate', response);
 		  				templates[num] = response;	
 		  			} else {
 		  				template = response;
@@ -44,7 +46,7 @@ module.exports = {
 		  			}
 		  		}
 			})
-		}
+		};
 		
 		if (req.body.templateId !== undefined) {
 			let templateId = req.body.templateId;
