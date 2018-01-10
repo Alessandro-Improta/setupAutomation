@@ -49,9 +49,14 @@ module.exports = {
 			getTemplate(templateId);
 		} else {
 			let getMultipleTemplates = function() {
+				let counter = 0;
 				for(let i = 0; i < templatesArr.length; i++) {
 					let num = i + 1;
 					getTemplate(templatesArr[i], num);
+					counter += 1
+				}
+				if (counter === templatesArr.length) {
+					return templates;
 				}
 			};
 
@@ -109,8 +114,13 @@ module.exports = {
 			uploadTemplateCopy(template)
 		} else {
 			let mulitpleUploads = function() {
+				let counter = 0;
 				for(const prop in templates) {
 					uploadTemplateCopy(prop);
+					counter += 1;
+				}
+				if (counter === Object.keys(templates).length) {
+					return newSpreadsheetIds;
 				}
 			};
 
@@ -147,8 +157,13 @@ module.exports = {
 			findAndReplace(newSpreadsheetId);
 		} else {
 			let multipleFindAndReplace = function() {
+				let counter = 0;
 				for(const prop in newSpreadsheetIds) {
 					findAndReplace(newSpreadsheetIds[prop]);
+					counter += 1;
+				}
+				if (counter === Object.keys(newSpreadsheetIds).length) {
+					return newSpreadsheetIds;
 				}
 			};
 
@@ -186,7 +201,9 @@ module.exports = {
 		} else {
 
 			let getMultipleCsv = function() {
+				let counter = 0;
 				for(const prop in newSpreadsheetIds) {
+					counter += 0;
 					drive.files.export({
 						fileId: newSpreadsheetIds[prop],
 						mimeType: 'text/csv'
@@ -194,10 +211,16 @@ module.exports = {
 					function(err, response){
 						if (err) {
 							console.log('downloadNewAccount', err);
+							res.send({
+								message: 'failed to download one of the CSVs'
+							})
 						} else {
 							csvs.push(response);
 						}
 					})
+				}
+				if (counter === newSpreadsheetIds.length) {
+					return csvs;
 				}
 			};
 
