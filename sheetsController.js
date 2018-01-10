@@ -44,6 +44,7 @@ module.exports = {
 			resource: resource
 		}, 
 		function(err, response){
+			console.log('new account callback');
 			if (err) {
 				console.error(title, err);
 				res.send({
