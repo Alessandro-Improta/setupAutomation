@@ -18,9 +18,6 @@ for (const prop in templateIds) {
 	templatesArr.push(templateIds[prop]);
 }
 
-console.log(templatesArr);
-
-
 module.exports = {
 	getTemplate: function(req, res, next) {
 		const getTemplate = function(templateId, num) {
@@ -36,7 +33,6 @@ module.exports = {
 		  			})
 		  		} else {
 		  			if (num){
-		  				console.log('getTemplate', response);
 		  				templates[num] = response;
 		  			} else {
 		  				template = response;
@@ -121,6 +117,8 @@ module.exports = {
 					res.send({
 						message: 'error with find and replace'
 					})
+				} else {
+					console.log('succesful find and replace');
 				}
 			});
 		}
@@ -131,9 +129,6 @@ module.exports = {
 			for(const prop in newSpreadsheetIds) {
 				findAndReplace(newSpreadsheetIds[prop]);
 			}
-			res.send({
-				message: 'Find and replace successful!'
-			});
 		}
 	},
 
