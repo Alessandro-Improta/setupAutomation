@@ -25,7 +25,7 @@ module.exports = {
 		  		console.log(response);
 		  		template = response;
 		  		res.send({
-					message: response
+					message: 'Got Template'
 				});
 			}
 		})
@@ -35,7 +35,10 @@ module.exports = {
 		console.log('upload copy was called');
 		let title = req.body.title;
 		template.properties.title = title;
-		let resource = template;
+		let resource = {
+			properties: template.properties,
+			sheets: template.sheets
+		};
 			
 		sheets.spreadsheets.create({
 			resource: resource
