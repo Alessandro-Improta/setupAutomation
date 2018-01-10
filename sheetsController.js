@@ -105,9 +105,6 @@ module.exports = {
 			for(const prop in templates) {
 				uploadTemplateCopy(prop);
 			}
-			res.send({
-				message: newSpreadsheetIds
-			});
 		}
 	},
 
