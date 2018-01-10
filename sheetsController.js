@@ -129,11 +129,9 @@ module.exports = {
 			};
 
 			mulitpleUploads()
-				.then(function(response){
-					res.send({
-						message: 'All uploads succesful!'
-					});
-				})
+			res.send({
+				message: 'All uploads succesful!'
+			});
 		}
 	},
 
