@@ -52,7 +52,7 @@ module.exports = {
 				let counter = 0;
 				for(let i = 0; i < templatesArr.length; i++) {
 					let num = i + 1;
-					getTemplate(templatesArr[i], num)
+					var promise = getTemplate(templatesArr[i], num)
 						.then(function(response) {
 							counter += 1;
 						})
