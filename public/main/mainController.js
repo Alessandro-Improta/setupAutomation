@@ -18,17 +18,25 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			.then(function(res){
 				if (localStorage.templateId) {
 					createNewAccountSpreadsheetsFromCustomTemplate()
+						.then(function(res) {
+							console.log(csvs);
+							revokeToken()
+								.then(function(res){
+									$scope.show1 = false;
+									$scope.show2 = true;
+								});
+						})
 				} else {
 					createNewAccountSpreadsheets()
+						.then(function(res) {
+							console.log(csvs);
+							revokeToken()
+								.then(function(res){
+									$scope.show1 = false;
+									$scope.show2 = true;
+								});
+						})
 				}
-					.then(function(res) {
-						console.log(csvs);
-						revokeToken()
-							.then(function(res){
-								$scope.show1 = false;
-								$scope.show2 = true;
-							});
-					})
 			})
 	};
 
