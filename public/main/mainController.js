@@ -4,6 +4,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.show = true;
 	$scope.show1 = false;
 	$scope.show2 = false;
+	inputData;
 
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
@@ -11,7 +12,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
 		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		addData(keys, values);
-		let inputData = localStorage;
+		inputData = localStorage;
 		sendLinkRequest()
 			.then(function(res){
 				getTemplate()
