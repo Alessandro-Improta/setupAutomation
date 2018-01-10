@@ -7,9 +7,9 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	let inputData;
 	let csvs = [];
 	const templateIds = {
-		1: '1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk',
+		1: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic',
 		2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
-		3: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic'
+		3: '1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk'
 	}
 	let templatesArr = [];
 	for (const prop in templateIds) {
@@ -318,6 +318,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 						console.log(res.data.message);
 						if (res.data.data) {
 							csvs.push(res.data.data);
+							console.log(csvs);
 						}
 					})
 	};
