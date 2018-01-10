@@ -4,7 +4,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.show = true;
 	$scope.show1 = false;
 	$scope.show2 = false;
-	inputData;
+	let inputData;
 
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
