@@ -11,15 +11,25 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
 		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		addData(keys, values);
+		let inputData = localStorage;
 		sendLinkRequest()
 			.then(function(res){
 				getTemplate()
 					.then(function(res){
-						revokeToken()
-							.then(function(res){
-								$scope.show1 = false;
-								$scope.show2 = true;
-							});
+						uploadCopyOfTemplate()
+							.then(function(res) {
+								findAndReplace()
+									.then(function(res) {
+										downloadNewAccount()
+											.then(function(res) {
+												revokeToken()
+													.then(function(res){
+														$scope.show1 = false;
+														$scope.show2 = true;
+													});
+											})
+									})
+							})
 					});
 			});
 	};
@@ -131,6 +141,66 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			}
 		})
 		.then(function(res){
+			console.log(res.data.message);
+		})
+	};
+
+	let uploadCopyOfTemplate = function() {
+		return $http({
+			method: 'POST',
+			url: appUrl + '/newAccount',
+			data: {
+				title: inputData.theater 
+			}
+			})
+			.then(function(res) {
+				console.log(res.data.message)
+			})
+	};
+
+	let findAndReplace = function() {
+		let requests = []
+		let replaceItems = [];
+		const findItems    = ['{Theatre Name}', '{Name Short}', '{City}', '{State}', 'http://www.fillyourseats.com', 'http://www.fillyourseats.com/contact-us', 'http://www.fillyourseats.com/ugly', 'http://www.fillyourseats.com/subscribe-w-stripe', 'http://www.fillyourseats.com/contact', 'http://www.fillyourseats.com/details']
+		replaceItems.push(inputData.theater);
+		replaceItems.push(inputData.theater);
+		replaceItems.push(inputData.city);
+		replaceItems.push(inputData.state);
+		replaceItems.push(inputData.website);
+		replaceItems.push(inputData.buyTicketsUrl);
+		replaceItems.push(inputData.aboutUrl);
+		replaceItems.push(inputData.directionUrl);
+		replaceItems.push(inputData.buyTicketsUrl);
+		replaceItems.push(inputData.buyTicketsUrl);
+
+		let fillRequestsArray = function () {
+			for (let i = 0; i < findItems.length; i++) {
+				requests.push({
+		  			findReplace: {
+		    			find: findItems[i],
+		    			replacement: replaceItems[i],
+		    			allSheets: true
+		  			}
+				});
+			}
+		}
+		fillRequestsArray();
+		requests.push({
+			updateSpreadsheetProperties: {
+				properties: {
+					title: "batchUpdate.csv"
+				},
+				fields: '*'
+			}
+		});
+		return $http({
+			method: 'PUT',
+			url: appUrl + '/findAndReplace',
+			data: {
+				requests: {requests: requests}
+			}
+		})
+		.then(function(res) {
 			console.log(res.data.message);
 		})
 	};
