@@ -122,7 +122,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 	let createNewAccountSpreadsheets = function() {
 		let counter = 0;
-		templateId;
+		let templateId;
 		for (let i = 0; i < templatesArr.length; i++) {
 			counter += 1;
 			templateId = templatesArr[i];
