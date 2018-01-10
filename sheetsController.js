@@ -18,6 +18,8 @@ for (const prop in templateIds) {
 	templatesArr.push(templateIds[prop]);
 }
 
+console.log(templatesArr);
+
 
 module.exports = {
 	getTemplate: function(req, res, next) {
