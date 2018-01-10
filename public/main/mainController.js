@@ -19,7 +19,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 				if (localStorage.templateId) {
 					createNewAccountSpreadsheetsFromCustomTemplate()
 						.then(function(res) {
-							console.log(csvs);
 							revokeToken()
 								.then(function(res){
 									$scope.show1 = false;
@@ -131,7 +130,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 							.then(function(res) {
 								getCsvData()
 									.then(function(res) {
-										return;
+										return console.log('You now have CSV data for the new account.');;
 									})
 							});
 					});
@@ -150,7 +149,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 								.then(function(res) {
 									getCsvData()
 										.then(function(res) {
-											return;
+											return console.log('You now have CSV data for the new account.');
 										})
 								})
 						});
