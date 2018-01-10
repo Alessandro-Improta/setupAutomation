@@ -34,9 +34,6 @@ module.exports = {
 		  		} else {
 		  			if (num){
 		  				templates[num] = response;	
-		  				res.send({
-							message: 'Got Template' + num
-						});
 		  			} else {
 		  				template = response;
 		  				res.send({
@@ -55,6 +52,9 @@ module.exports = {
 				let num = i + 1;
 				getTemplate(templatesArr[i], num);
 			}
+			res.send({
+				message: templates
+			});
 		}
 	},
 
@@ -88,9 +88,6 @@ module.exports = {
 					} else {
 						newSpreadsheetId = response.spreadsheetId;
 					}
-					res.send({
-						message: 'successfully posted ' + title + '!'
-					});
 				}
 			})
 		};
@@ -101,6 +98,9 @@ module.exports = {
 			for(const prop in templates) {
 				uploadTemplateCopy(prop);
 			}
+			res.send({
+				message: newSpreadsheetIds
+			});
 		}
 	},
 
@@ -114,11 +114,10 @@ module.exports = {
 			function(err, response) {
 				if(err) {
 					console.log(err);
-				} else {
 					res.send({
-						message: 'Find and replace successful!'
-					});
-			  	}
+						message: 'error with find and replace'
+					})
+				}
 			});
 		}
 
@@ -128,6 +127,9 @@ module.exports = {
 			for(const prop in newSpreadsheetIds) {
 				findAndReplace(newSpreadsheetIds[prop]);
 			}
+			res.send({
+				message: 'Find and replace successful!'
+			});
 		}
 	},
 
