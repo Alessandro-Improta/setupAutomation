@@ -38,7 +38,8 @@ module.exports = {
 		  			if (num){
 		  				console.log('getTemplate', response);
 		  				let key = 'id' + num;
-		  				templates[key] = response;	
+		  				templates[key] = response;
+		  				console.log(templates);
 		  			} else {
 		  				template = response;
 		  				res.send({
