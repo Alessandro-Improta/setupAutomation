@@ -33,7 +33,8 @@ var scopes = [
   'https://mail.google.com/',
   'https://www.googleapis.com/auth/user.emails.read',
   'https://www.googleapis.com/auth/contacts',
-  'https://www.googleapis.com/auth/plus.login'
+  'https://www.googleapis.com/auth/plus.login',
+  'https://www.googleapis.com/auth/drive'
 ];
 
 var url = oauth2Client.generateAuthUrl({

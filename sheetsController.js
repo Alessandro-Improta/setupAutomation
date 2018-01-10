@@ -83,7 +83,7 @@ module.exports = {
 		},
 		function(err, response) {
 			if (err) {
-				console.log('downloadNewAccount', err);
+				console.log('getCsvData', err);
 				res.send({
 					message: "error downloading csv",
 					data: false
