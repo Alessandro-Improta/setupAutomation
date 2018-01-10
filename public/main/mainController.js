@@ -121,11 +121,13 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let createNewAccountSpreadsheets = function() {
-		console.log(templatesArr);
 		let counter = 0;
+		templateId;
 		for (let i = 0; i < templatesArr.length; i++) {
 			counter += 1;
-			getTemplate(templatesArr[i])
+			templateId = templatesArr[i];
+			console.log('in for loop: ', templateId);
+			getTemplate(templateId)
 				.then(function(res) {
 					uploadCopyOfTemplate(counter)
 						.then(function(res){
@@ -147,6 +149,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 	let getTemplate = function(id) {
 		let templateId = id;
+		console.log('get template: ', templateId);
 		return $http({
 			method: "GET",
 			url: appUrl + '/template',
