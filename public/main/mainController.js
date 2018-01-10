@@ -16,15 +16,13 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		templatesArr.push(templateIds[prop]);
 	}
 
-	console.log(typeof $scope.templateId, templatesArr);
+	let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
+	let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
 		$scope.show1 = true;
-		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
-		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		addData(keys, values);
-		inputData = localStorage;
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
@@ -38,6 +36,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	//TESTING
 	//*********************************************
 	$scope.testTemplate = function() {
+		addData(keys, values);
 		getTemplate('1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic');
 	};
 
@@ -109,7 +108,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		for(var i = 0; i < keys.length; i++) {
 			localStorage.setItem(keys[i], values[i]);
 		}
-		return console.log(localStorage);
+		inputData = localStorage;
+		return console.log(inputData);
 	};
 
 	let createNewAccountSpreadsheetsFromCustomTemplate = function() {
