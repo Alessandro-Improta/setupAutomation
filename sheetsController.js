@@ -78,7 +78,7 @@ module.exports = {
 			}, 
 			function(err, response){
 				if (err) {
-					console.error(title err);
+					console.error(title, err);
 					res.send({
 						message: 'Error uploading template copy ' + title
 					})
@@ -139,7 +139,7 @@ module.exports = {
 			},
 			function(err, response) {
 				if (err) {
-					console.log('downloadNewAccount' err);
+					console.log('downloadNewAccount', err);
 					res.send({
 						message: "error downloading csv",
 						data: ''
@@ -162,7 +162,7 @@ module.exports = {
 				},
 				function(err, response){
 					if (err) {
-						console.log('downloadNewAccount' err);
+						console.log('downloadNewAccount', err);
 					} else {
 						csvs.push(response);
 					}
