@@ -52,11 +52,13 @@ module.exports = {
 				let counter = 0;
 				for(let i = 0; i < templatesArr.length; i++) {
 					let num = i + 1;
-					getTemplate(templatesArr[i], num);
-					counter += 1
-				}
-				if (counter === templatesArr.length) {
-					return templates;
+					getTemplate(templatesArr[i], num)
+						.then(function(response) {
+							counter += 1;
+						})
+					if (counter === templatesArr.length) {
+						return templates;
+					}
 				}
 			};
 
@@ -67,7 +69,6 @@ module.exports = {
 					});
 				})
 		}
-		
 	},
 
 	newAccount: function(req, res, next) {
@@ -116,12 +117,15 @@ module.exports = {
 			let mulitpleUploads = function() {
 				let counter = 0;
 				for(const prop in templates) {
-					uploadTemplateCopy(prop);
-					counter += 1;
+					uploadTemplateCopy(prop)
+						.then(function(response){
+							counter += 1;						
+						})
+					if (counter === Object.keys(templates).length) {
+						return newSpreadsheetIds;
+					}	
 				}
-				if (counter === Object.keys(templates).length) {
-					return newSpreadsheetIds;
-				}
+				
 			};
 
 			mulitpleUploads()
@@ -159,11 +163,13 @@ module.exports = {
 			let multipleFindAndReplace = function() {
 				let counter = 0;
 				for(const prop in newSpreadsheetIds) {
-					findAndReplace(newSpreadsheetIds[prop]);
-					counter += 1;
-				}
-				if (counter === Object.keys(newSpreadsheetIds).length) {
-					return newSpreadsheetIds;
+					findAndReplace(newSpreadsheetIds[prop])
+						.then(function(response) {
+							counter += 1;
+						})
+					if (counter === Object.keys(newSpreadsheetIds).length) {
+						return newSpreadsheetIds;
+					}	
 				}
 			};
 
