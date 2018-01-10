@@ -38,7 +38,6 @@ module.exports = {
 		  			if (num){
 		  				console.log('getTemplate', response);
 		  				templates[num] = response;
-		  				console.log(templates);
 		  			} else {
 		  				template = response;
 		  				res.send({
@@ -57,10 +56,10 @@ module.exports = {
 				let num = i + 1;
 				getTemplate(templatesArr[i], num);
 			}
-			res.send({
-				message: templates
-			});
 		}
+		res.send({
+			message: templates
+		});
 	},
 
 	newAccount: function(req, res, next) {
