@@ -63,16 +63,18 @@ module.exports = {
 	},
 
 	newAccount: function(req, res, next) {
+		
+		let resource;
+		let title;
+
 		const uploadTemplateCopy = function(num) {
-			let resource;
-			let title;
 			if (num) {
 				title = req.body.title + num;
 				templates[num].properties.title = title;
 				resource = templates[num];
 			} else {
 				title = req.body.title;
-				template.properties.title = req.body.title;
+				template.properties.title = title;
 				resource = template;
 			}
 
@@ -88,7 +90,8 @@ module.exports = {
 					})
 				} else {
 					if (num) {
-						newSpreadsheetIds[num] = response.spreadsheetId;	
+						newSpreadsheetIds[num] = response.spreadsheetId;
+						console.log(newSpreadsheetIds);	
 					} else {
 						newSpreadsheetId = response.spreadsheetId;
 					}
