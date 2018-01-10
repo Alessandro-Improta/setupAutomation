@@ -22,6 +22,7 @@ module.exports = {
 		  			message: 'error getting template ' + req.body.templateId
 		  		})
 		  	} else {
+		  		console.log(response);
 		  		template = response;
 		  		res.send({
 					message: 'Got Template'
@@ -88,8 +89,7 @@ module.exports = {
 					message: "error downloading csv",
 					data: false
 				})
-			} else {
-				console.log(response);		
+			} else {		
 				res.send({
 					message: "successfully downloaded csv",
 					data: response
