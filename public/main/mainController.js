@@ -7,6 +7,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	let inputData;
 	let csvs = [];
 
+	console.log($scope.templateId);
+
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
 		$scope.show1 = true;
@@ -16,10 +18,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		inputData = localStorage;
 		sendLinkRequest()
 			.then(function(res){
-				if (localStorage.templateId) {
-					createNewAccountSpreadsheetsFromCustomTemplate();
-				} else {
+				if (localStorage.templateId === undefined) {
 					createNewAccountSpreadsheets();
+				} else {
+					createNewAccountSpreadsheetsFromCustomTemplate();
 				}
 			})
 	};
