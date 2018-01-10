@@ -29,7 +29,7 @@ module.exports = {
 		  		if(err) {
 		  			console.log('getTemplate ', err);
 		  			res.send({
-		  				message: err
+		  				message: 'error getting message'
 		  			})
 		  		} else {
 		  			if (num){
@@ -48,14 +48,21 @@ module.exports = {
 			let templateId = req.body.templateId;
 			getTemplate(templateId);
 		} else {
-			for(let i = 0; i < templatesArr.length; i++) {
-				let num = i + 1;
-				getTemplate(templatesArr[i], num);
-			}
+			let getMultipleTemplates = function() {
+				for(let i = 0; i < templatesArr.length; i++) {
+					let num = i + 1;
+					getTemplate(templatesArr[i], num);
+				}
+			};
+
+			getMultipleTemplates()
+				.then(function(response){
+					res.send({
+						message: templates
+					});
+				})
 		}
-		res.send({
-			message: templates
-		});
+		
 	},
 
 	newAccount: function(req, res, next) {
@@ -90,23 +97,36 @@ module.exports = {
 						console.log(newSpreadsheetIds);	
 					} else {
 						newSpreadsheetId = response.spreadsheetId;
+						res.send({
+							message: 'upload succesful!'
+						})
 					}
 				}
 			})
 		};
 
 		if (template) {
-			uploadTemplateCopy()
+			uploadTemplateCopy(template)
 		} else {
-			for(const prop in templates) {
-				uploadTemplateCopy(prop);
-			}
+			let mulitpleUploads = function() {
+				for(const prop in templates) {
+					uploadTemplateCopy(prop);
+				}
+			};
+
+			mulitpleUploads()
+				.then(function(response){
+					res.send({
+						message: 'All uploads succesful!'
+					});
+				})
 		}
 	},
 
 	findAndReplace: function(req, res, next) {
 		const findAndReplace = function(id) {
-			batchUpdateRequest = req.body.requests;
+			console.log(newSpreadsheetIds);
+			let batchUpdateRequest = req.body.requests;
 			sheets.spreadsheets.batchUpdate({
 			  spreadsheetId: id,
 			  resource: batchUpdateRequest
@@ -125,10 +145,19 @@ module.exports = {
 
 		if (newSpreadsheetId) {
 			findAndReplace(newSpreadsheetId);
-		} else{
-			for(const prop in newSpreadsheetIds) {
-				findAndReplace(newSpreadsheetIds[prop]);
-			}
+		} else {
+			let multipleFindAndReplace = function() {
+				for(const prop in newSpreadsheetIds) {
+					findAndReplace(newSpreadsheetIds[prop]);
+				}
+			};
+
+			multipleFindAndReplace()
+				.then(function(response) {
+					res.send({
+						message: 'all find and replace done!'
+					})
+				})
 		}
 	},
 
@@ -156,23 +185,29 @@ module.exports = {
 
 		} else {
 
-			for(const prop in newSpreadsheetIds) {
-				drive.files.export({
-					fileId: newSpreadsheetIds[prop],
-					mimeType: 'text/csv'
-				},
-				function(err, response){
-					if (err) {
-						console.log('downloadNewAccount', err);
-					} else {
-						csvs.push(response);
-					}
+			let getMultipleCsv = function() {
+				for(const prop in newSpreadsheetIds) {
+					drive.files.export({
+						fileId: newSpreadsheetIds[prop],
+						mimeType: 'text/csv'
+					},
+					function(err, response){
+						if (err) {
+							console.log('downloadNewAccount', err);
+						} else {
+							csvs.push(response);
+						}
+					})
+				}
+			};
+
+			getMultipleCsv()
+				.then(function(response){
+					res.send({
+						message: 'successfully downloaded all csvs',
+						data: csvs
+					})
 				})
-			}
-			res.send({
-				message: 'successfully downloaded all csvs',
-				data: csvs
-			})
 		}	
 	}
 }

@@ -185,15 +185,9 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 				});
 			}
 		}
+
 		fillRequestsArray();
-		requests.push({
-			updateSpreadsheetProperties: {
-				properties: {
-					title: "batchUpdate.csv"
-				},
-				fields: '*'
-			}
-		});
+		
 		return $http({
 			method: 'PUT',
 			url: appUrl + '/findAndReplace',
