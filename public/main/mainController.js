@@ -5,6 +5,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.show1 = false;
 	$scope.show2 = false;
 	let inputData;
+	let csvs = [];
 
 	$scope.mainAccountActions = function() {
 		$scope.show = false;
@@ -15,51 +16,21 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		inputData = localStorage;
 		sendLinkRequest()
 			.then(function(res){
-				getTemplate()
-					.then(function(res){
-						uploadCopyOfTemplate()
-							.then(function(res) {
-								findAndReplace()
-									.then(function(res) {
-										downloadNewAccount()
-											.then(function(res) {
-												revokeToken()
-													.then(function(res){
-														$scope.show1 = false;
-														$scope.show2 = true;
-													});
-											})
-									})
-							})
-					});
-			});
-	};
-
-	//testing
-	//*********
-		$scope.getTemplate = function() {
-			getTemplate()
-		};
-
-		$scope.upload = function() {
-			return $http({
-				method: 'POST',
-				url: appUrl + '/newAccount',
-				data: {
-					title: inputData.theater 
+				if (localStorage.templateId) {
+					createNewAccountSpreadsheetsFromCustomTemplate()
+				} else {
+					createNewAccountSpreadsheets()
 				}
-				})
-				.then(function(res) {
-					console.log(res.data.message)
-				})
-		};
-
-		$scope.getCsv = function() {
-			downloadNewAccount();
-		};
-
-
-	//*****
+					.then(function(res) {
+						console.log(csvs);
+						revokeToken()
+							.then(function(res){
+								$scope.show1 = false;
+								$scope.show2 = true;
+							});
+					})
+			})
+	};
 
 	$scope.startOver = function(){
 		clearData();
@@ -133,12 +104,52 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		return console.log(localStorage);
 	};
 
-	let getTemplate = function() {
+	const templateIds = {
+		1: '1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk',
+		2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
+		3: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic'
+	}
+	let templatesArr = [];
+	for (const prop in templateIds) {
+		templatesArr.push(templateIds[prop]);
+	}
+
+	let createNewAccountSpreadsheetsFromCustomTemplate = function() {
+		getTemplate(localStorage.templateId)
+			.then(function(res) {
+				uploadCopyOfTemplate()
+					.then(function(res) {
+						findAndReplace()
+							.then(function(res) {
+								getCsvData();
+							});
+					});
+			});
+	};
+
+	let createNewAccountSpreadsheets = function() {
+		let counter = 0;
+		for (let i = 0; i < templatesArr.length; i++) {
+			counter += 1;
+			getTemplate(templatesArr[i])
+				.then(function(res) {
+					uploadCopyOfTemplate(counter)
+						.then(function(res){
+							findAndReplace()
+								.then(function(res) {
+									getCsvData();
+								})
+						});
+				});
+		};
+	};
+
+	let getTemplate = function(id) {
 		return $http({
 			method: "GET",
 			url: appUrl + '/template',
 			data: {
-				templateId: localStorage.templateId
+				templateId: id
 			}
 		})
 		.then(function(res){
@@ -146,17 +157,23 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		})
 	};
 
-	let uploadCopyOfTemplate = function() {
+	let uploadCopyOfTemplate = function(num) {
+		let title;
+		if (num) {
+			title = inputData.theater + num;
+		} else {
+			title = inputData.theater;
+		}
 		return $http({
 			method: 'POST',
 			url: appUrl + '/newAccount',
 			data: {
-				title: inputData.theater 
+				title: title
 			}
-			})
-			.then(function(res) {
-				console.log(res.data.message)
-			})
+		})
+		.then(function(res) {
+			console.log(res.data.message)
+		})
 	};
 
 	let findAndReplace = function() {
@@ -227,12 +244,13 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 
-	let downloadNewAccount = function() {
-		return $http.get(appUrl + '/downloadNewAccount')
+	let getCsvData = function() {
+		return $http.get(appUrl + '/getCsvData')
 					.then(function(res) {
 						console.log(res.data.message);
-						csvs = res.data.data;
-						downloadCSV('1.csv', csvs[0]);
+						if (res.data.data) {
+							csvs.push(res.data.data);
+						}
 					})
 	};
 
