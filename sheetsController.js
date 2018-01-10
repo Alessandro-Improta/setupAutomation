@@ -25,7 +25,7 @@ module.exports = {
 		  		console.log(response);
 		  		template = response;
 		  		res.send({
-					message: 'Got Template'
+					message: response
 				});
 			}
 		})
