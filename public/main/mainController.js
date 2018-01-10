@@ -32,7 +32,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 					console.log('existing templates');
 				} else {
 					createNewAccountSpreadsheetsFromCustomTemplate();
-					console.log(''test'');
+					console.log('custom template');
 				}
 			})
 	};
