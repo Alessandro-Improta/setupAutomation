@@ -37,8 +37,7 @@ module.exports = {
 		  		} else {
 		  			if (num){
 		  				console.log('getTemplate', response);
-		  				let key = 'id' + num;
-		  				templates[key] = response;
+		  				templates[num] = response;
 		  				console.log(templates);
 		  			} else {
 		  				template = response;
