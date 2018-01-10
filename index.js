@@ -17,7 +17,6 @@ const port = 3000;
 
 app.get('/firstLogIn', auth.firstLogIn);
 app.get('/secondLogIn', auth.secondLogIn);
-app.get('/template', sheets.getTemplate);
 app.get('/getTagManagerAccount', gtm.getTagManagerAccount);
 app.get('/getGTMContainer', gtm.getGTMContainer);
 app.get('/adwordsAccount', auth.getAdwordsAccount)
@@ -29,6 +28,7 @@ app.get('/getProfiles', analytics.getProfiles);
 app.get('/getGoals', analytics.getGoals);
 app.get('/getCsvData', sheets.getCsvData);
 
+app.put('/template', sheets.getTemplate);
 app.put('/tokens', auth.setTokens);
 app.put('/findAndReplace', sheets.findAndReplace);
 

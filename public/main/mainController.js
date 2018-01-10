@@ -149,7 +149,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	let getTemplate = function(id) {
 		let templateId = id;
 		return $http({
-			method: "GET",
+			method: "PUT",
 			url: appUrl + '/template',
 			data: {
 				templateId: templateId
