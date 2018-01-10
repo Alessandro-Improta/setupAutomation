@@ -63,11 +63,9 @@ module.exports = {
 			};
 
 			getMultipleTemplates()
-				.then(function(response){
-					res.send({
-						message: templates
-					});
-				})
+			res.send({
+				message: templates
+			});
 		}
 	},
 
