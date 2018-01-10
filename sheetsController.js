@@ -23,6 +23,7 @@ module.exports = {
 		  		})
 		  	} else {
 		  		template = response;
+		  		console.log('template: ', template);
 		  		res.send({
 					message: 'Got Template'
 				});
@@ -32,6 +33,7 @@ module.exports = {
 
 	newAccount: function(req, res, next) {
 		console.log('upload copy was called');
+		console.log(template);
 		let title = req.body.title;
 		template.properties.title = title;
 		let resource = template;
