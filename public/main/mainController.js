@@ -37,7 +37,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	//*********************************************
 	$scope.testTemplate = function() {
 		addData(keys, values);
-		getTemplate('1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic');
+		getTemplate('1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk');
 	};
 
 	$scope.testUpload = function () {
