@@ -123,28 +123,81 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	let createNewAccountSpreadsheets = function() {
 		let counter = 0;
 		let templateId;
-		for (let i = 0; i < templatesArr.length; i++) {
-			counter += 1;
-			templateId = templatesArr[i];
-			getTemplate(templateId)
+		getTemplate(templatesArr[counter])
 				.then(function(res) {
 					uploadCopyOfTemplate(counter)
 						.then(function(res){
 							findAndReplace()
 								.then(function(res) {
+									counter += 1;
 									getCsvData()
-										.then(function(res) {
-											revokeToken()
-												.then(function(res){
-													$scope.show1 = false;
-													$scope.show2 = true;
-												});
-										})
-								})
+										.then(function(res){
+											if (counter < templatesArr.length) {
+												getTemplate(templatesArr[counter])
+													.then(function(res) {
+														uploadCopyOfTemplate(counter)
+															.then(function(res){
+																findAndReplace()
+																	.then(function(res) {
+																		counter += 1;
+																		getCsvData()
+																			.then(function(res){
+																				if (counter < templatesArr.length) {
+																					getTemplate(templatesArr[counter])
+																						.then(function(res) {
+																							uploadCopyOfTemplate(counter)
+																								.then(function(res){
+																									findAndReplace()
+																										.then(function(res) {
+																											counter += 1;
+																											getCsvData()
+																												.then(function(res) {		
+																													if (counter < templatesArr.length) {
+																														getTemplate(templatesArr[counter])
+																															.then(function(res) {
+																																uploadCopyOfTemplate(counter)
+																																	.then(function(res){
+																																		findAndReplace()
+																																			.then(function(res) {
+																																				counter += 1;
+																																				getCsvData()
+																																			})
+																																	})
+																															})					
+																													} else {
+																														revokeToken()
+																															.then(function(res){
+																																$scope.show1 = false;
+																																$scope.show2 = true;
+																															});
+																													}
+																												})
+																										});
+																								});
+																						});
+																				} else {
+																					revokeToken()
+																						.then(function(res) {
+																							$scope.show1 = false;
+																							$scope.show2 = true;
+																						})
+																				}
+																			});
+																	});															
+															})
+													});
+											} else {
+												revokeToken()
+													.then(function(res) {
+														$scope.show1 = false;
+														$scope.show2 = true;
+													})
+											}		
+										});
+								});
 						});
 				});
-		};
-	};
+	};							
 
 	let getTemplate = function(id) {
 		let templateId = id;
