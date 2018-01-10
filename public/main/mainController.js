@@ -126,7 +126,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		for (let i = 0; i < templatesArr.length; i++) {
 			counter += 1;
 			templateId = templatesArr[i];
-			console.log('in for loop: ', templateId);
 			getTemplate(templateId)
 				.then(function(res) {
 					uploadCopyOfTemplate(counter)
@@ -149,7 +148,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 	let getTemplate = function(id) {
 		let templateId = id;
-		console.log('get template: ', templateId);
 		return $http({
 			method: "GET",
 			url: appUrl + '/template',

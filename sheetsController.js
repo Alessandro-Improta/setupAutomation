@@ -9,6 +9,7 @@ let csv;
 
 module.exports = {
 	getTemplate: function(req, res, next) {
+		console.log(req.body);
 		sheets.spreadsheets.get({
 	  		spreadsheetId: req.body.templateId,
 	 		ranges: [],
