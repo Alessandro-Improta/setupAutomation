@@ -29,8 +29,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
 					createNewAccountSpreadsheets();
+					console.log('existing templates');
 				} else {
 					createNewAccountSpreadsheetsFromCustomTemplate();
+					console.log(''test'');
 				}
 			})
 	};
