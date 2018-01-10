@@ -29,10 +29,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
 					createNewAccountSpreadsheets();
-					console.log('existing templates');
 				} else {
 					createNewAccountSpreadsheetsFromCustomTemplate();
-					console.log('custom template');
 				}
 			})
 	};
@@ -123,6 +121,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let createNewAccountSpreadsheets = function() {
+		console.log(templatesArr);
 		let counter = 0;
 		for (let i = 0; i < templatesArr.length; i++) {
 			counter += 1;
@@ -147,11 +146,12 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let getTemplate = function(id) {
+		let templateId = id;
 		return $http({
 			method: "GET",
 			url: appUrl + '/template',
 			data: {
-				templateId: id
+				templateId: templateId
 			}
 		})
 		.then(function(res){
