@@ -169,7 +169,7 @@ module.exports = {
 				})
 			}
 			res.send({
-				message: 'successfully downloaded all csvs'
+				message: 'successfully downloaded all csvs',
 				data: csvs
 			})
 		}	
