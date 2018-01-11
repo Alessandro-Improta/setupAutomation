@@ -73,15 +73,14 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 								});
 						});			
 				} else {
-					createEmptySpreadsheet(newNum)
+					createEmptySpreadsheet(counter)
 						.then(function(res) {
-							copyTemplateTo(id)
+							copyTemplateTo(localStorage.templateId)
 								.then(function(res) {
 									deleteEmptySheetInNewSpreadsheet()
 										.then(function(res) {
 											findAndReplace()
 												.then(function(res) {
-													counter +=1
 													getCsvData()
 														.then(function(res) {
 															revokeToken();
