@@ -53,11 +53,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			let id = templatesArr[num];
 		}
 		
-		if (num) {
-			let newNum = num + 1;	
-		} else {
-			let newNum = '';
-		}
+		let newNum = num + 1;	
 
 		createEmptySpreadsheet(newNum)
 			.then(function(res) {
