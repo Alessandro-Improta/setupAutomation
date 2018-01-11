@@ -47,13 +47,19 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let createNewAccountSpreadsheets = function(num) {
+		let id;
+		let newNum;
 		if (localStorage.templateId !== 'undefined') {
-			let id = localStorage.templateId;
+			id = localStorage.templateId;
 		} else {
-			let id = templatesArr[num];
+			id = templatesArr[num];
 		}
 		
-		let newNum = num + 1;	
+		if (num) {
+			newNum = num + 1;	
+		} else {
+			newNum = '';
+		}
 
 		createEmptySpreadsheet(newNum)
 			.then(function(res) {
@@ -64,7 +70,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 								counter += 1;
 								findAndReplace()
 									.then(function(res) {
-										getCsvData();
+										getCsvData()
+											.then(function(res) {
+												return console.log('createEmptySpreadsheet completed');
+											})
 									});
 							});
 					});
