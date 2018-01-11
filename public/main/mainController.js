@@ -24,7 +24,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		$scope.show = false;
 		$scope.show1 = true;
-		addData(keys, values);
+		addData(keys, values)
+			.then(function(res) {
+				console.log('addData');
+			})
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
