@@ -58,6 +58,10 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 																																.then(function(res) {
 																																	counter +=1
 																																	getCsvData()
+																																		.then(function(res) {
+																																			$scope.show1 = false;
+																																			$scope.show2 = true;
+																																		})
 																																});
 																														});
 																												});
@@ -91,41 +95,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 						});			
 				}
 			});
-	};
-
-	let createNewAccountSpreadsheets = function(num) {
-		let deferred = $q.defer();
-		deferred.resolve('done');
-		let id;
-		let newNum;
-
-		if (localStorage.templateId !== 'undefined') {
-			id = localStorage.templateId;
-		} else {
-			id = templatesArr[num];
-		}
-		
-		if (num) {
-			newNum = num + 1;	
-		} else {
-			newNum = '';
-		}
-
-
-		createEmptySpreadsheet(newNum)
-			.then(function(res) {
-				copyTemplateTo(id)
-					.then(function(res) {
-						deleteEmptySheetInNewSpreadsheet()
-							.then(function(res) {
-								findAndReplace()
-									.then(function(res) {
-										counter +=1
-										getCsvData()
-									});
-							});
-					});
-			});			
 	};
 
 	$scope.startOver = function(){
