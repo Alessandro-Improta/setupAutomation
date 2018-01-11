@@ -16,6 +16,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		templatesArr.push(templateIds[prop]);
 	}
 	let counter = 0;
+	let newNum = counter + 1;
 
 	
 
@@ -28,23 +29,72 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
-					createNewAccountSpreadsheets(counter)
+					createEmptySpreadsheet(newNum)
 						.then(function(res) {
-							createNewAccountSpreadsheets(counter)
+							copyTemplateTo(templateIds[1])
 								.then(function(res) {
-									createNewAccountSpreadsheets(counter)
+									deleteEmptySheetInNewSpreadsheet()
 										.then(function(res) {
-											revokeToken();
+											findAndReplace()
+												.then(function(res) {
+													counter +=1
+													getCsvData()
+														.then(function(res) {
+															createEmptySpreadsheet(newNum)
+																.then(function(res) {
+																	copyTemplateTo(templateIds[2])
+																		.then(function(res) {
+																			deleteEmptySheetInNewSpreadsheet()
+																				.then(function(res) {
+																					findAndReplace()
+																						.then(function(res) {
+																							counter +=1
+																							getCsvData()
+																								.then(function(res) {
+																									createEmptySpreadsheet(newNum)
+																										.then(function(res) {
+																											copyTemplateTo(templateIds[3])
+																												.then(function(res) {
+																													deleteEmptySheetInNewSpreadsheet()
+																														.then(function(res) {
+																															findAndReplace()
+																																.then(function(res) {
+																																	counter +=1
+																																	getCsvData()
+																																});
+																														});
+																												});
+																										});			
+																								});
+																						});
+																				});
+																		});
+																});			
+														});
+												});
 										});
 								});
-						});
+						});			
 				} else {
-					createNewAccountSpreadsheets()
+					createEmptySpreadsheet(newNum)
 						.then(function(res) {
-							revokeToken();
-						})
+							copyTemplateTo(id)
+								.then(function(res) {
+									deleteEmptySheetInNewSpreadsheet()
+										.then(function(res) {
+											findAndReplace()
+												.then(function(res) {
+													counter +=1
+													getCsvData()
+														.then(function(res) {
+															revokeToken();
+														});
+												});
+										});
+								});
+						});			
 				}
-			})
+			});
 	};
 
 	let createNewAccountSpreadsheets = function(num) {
@@ -65,28 +115,21 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			newNum = '';
 		}
 
-		let creatingEmptySpreadsheet = function() {
-			createEmptySpreadsheet(newNum)
-				.then(function(res) {
-					copyTemplateTo(id)
-						.then(function(res) {
-							deleteEmptySheetInNewSpreadsheet()
-								.then(function(res) {
-									findAndReplace()
-										.then(function(res) {
-											counter +=1
-											getCsvData()
-												.then(function(res) {
-													return deferred.promise
-												})
-										});
-								});
-						});
-				});			
-		}
 
-
-		return creatingEmptySpreadsheet();
+		createEmptySpreadsheet(newNum)
+			.then(function(res) {
+				copyTemplateTo(id)
+					.then(function(res) {
+						deleteEmptySheetInNewSpreadsheet()
+							.then(function(res) {
+								findAndReplace()
+									.then(function(res) {
+										counter +=1
+										getCsvData()
+									});
+							});
+					});
+			});			
 	};
 
 	$scope.startOver = function(){
