@@ -6,6 +6,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.show2 = false;
 	let inputData;
 	let title;
+	let csvs = [];
 	const templateIds = {
 		1: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic',
 		2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
@@ -59,6 +60,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 																																	counter +=1
 																																	getCsvData()
 																																		.then(function(res) {
+																																			console.log(JSON.parse(localStorage.csvs));
 																																			$scope.show1 = false;
 																																			$scope.show2 = true;
 																																		})
@@ -276,29 +278,11 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 					.then(function(res) {
 						console.log(res.data.message);
 						if (res.data.data) {
-							localStorage.setItem(title, res.data.data);
+							csvs.push(res.data.data);
+							localStorage.setItem('csvs', JSON.stringify(csvs));
 						}
 					})
 	};
-
-	$scope.downloadCSV = function (filename, data) {  
-       	
-        var csv = data;
-
-        let filename = filename + '.csv' || 'export.csv';
-
-        if (!csv.match(/^data:text\/csv/i)) {
-            csv = 'data:text/csv;charset=utf-8,' + csv;
-        }
-        let preparedData = encodeURI(csv);
-
-        let link = document.createElement('a');
-        link.setAttribute('href', preparedData);
-        link.setAttribute('download', filename);
-        link.click();
-    };
-
-
 
 	(function(){
 		setTokens();

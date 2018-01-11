@@ -28,66 +28,6 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 					})
 	};
 
-	let uploadCopyOfTemplate = function() {
-		return $http({
-			method: 'POST',
-			url: appUrl + '/newAccount',
-			data: {
-				title: inputData.theater 
-			}
-			})
-			.then(function(res) {
-				console.log(res.data.message)
-			})
-	};
-
-	let findAndReplace = function() {
-		let requests = []
-		let replaceItems = [];
-		const findItems    = ['{Theatre Name}', '{Name Short}', '{City}', '{State}', 'http://www.fillyourseats.com', 'http://www.fillyourseats.com/contact-us', 'http://www.fillyourseats.com/ugly', 'http://www.fillyourseats.com/subscribe-w-stripe', 'http://www.fillyourseats.com/contact', 'http://www.fillyourseats.com/details']
-		replaceItems.push(inputData.theater);
-		replaceItems.push(inputData.theater);
-		replaceItems.push(inputData.city);
-		replaceItems.push(inputData.state);
-		replaceItems.push(inputData.website);
-		replaceItems.push(inputData.buyTicketsUrl);
-		replaceItems.push(inputData.aboutUrl);
-		replaceItems.push(inputData.directionUrl);
-		replaceItems.push(inputData.buyTicketsUrl);
-		replaceItems.push(inputData.buyTicketsUrl);
-
-		let fillRequestsArray = function () {
-			for (let i = 0; i < findItems.length; i++) {
-				requests.push({
-		  			findReplace: {
-		    			find: findItems[i],
-		    			replacement: replaceItems[i],
-		    			allSheets: true
-		  			}
-				});
-			}
-		}
-		fillRequestsArray();
-		requests.push({
-			updateSpreadsheetProperties: {
-				properties: {
-					title: "batchUpdate.csv"
-				},
-				fields: '*'
-			}
-		});
-		return $http({
-			method: 'PUT',
-			url: appUrl + '/findAndReplace',
-			data: {
-				requests: {requests: requests}
-			}
-		})
-		.then(function(res) {
-			console.log(res.data.message);
-		})
-	};
-
 	let getTagManagerAccount = function() {
 		return $http.get(appUrl + '/getTagManagerAccount')
 					.then(function(res) {
@@ -150,13 +90,6 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		.then(function(res) {
 			console.log(res.data.message);
 		})
-	};
-
-	let adwordsTest = function() {
-		return $http.get(appUrl + '/test')
-					.then(function(res) {
-						console.log(res.data.message);
-					})
 	};
 
 	let acceptLinkRequest = function() {
@@ -258,6 +191,21 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			console.log(res.data.message);
 		})
 	};
+
+	let download = function(filename, csv) {
+	  let element = angular.element('#downloads').append('<a href=data:text/csv;charset=utf-8,' +encodeURI(csv)+ ' download=' + filename + '></a>').css('display', 'none');
+
+	  element.click();
+	}
+
+	$scope.downloadCsvs = function() {
+		let arr = JSON.parse(localStorage.csvs);
+		let filename = localStorage.theater
+		for (let i = 0; i < arr.length; i++) {
+			download(filename + i, arr[i]);
+		}
+	}
+
 
 	(function(){
 		$scope.show = true;
