@@ -1,4 +1,4 @@
-angular.module('setupApp').controller('mainController', function($scope, $location, $http, $window, constants){
+angular.module('setupApp').controller('mainController', function($scope, $location, $http, $window, constants, $q){
 
 	var appUrl = constants.appUrl;
 	$scope.show = true;
@@ -24,10 +24,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		$scope.show = false;
 		$scope.show1 = true;
-		addData(keys, values)
-			.then(function(res) {
-				console.log('addData');
-			})
+		addData(keys, values);
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
@@ -51,6 +48,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let createNewAccountSpreadsheets = function(num) {
+		let deferred = $q.defer();
 		let id;
 		let newNum;
 
@@ -76,12 +74,13 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 									.then(function(res) {
 										counter +=1
 										getCsvData()
+											.then(function(res) {
+												return deferred.promise;
+											})
 									});
 							});
 					});
 			});
-
-		return console.log('Done running createNewAccountSpreadsheets ' + newNum);
 	};
 
 	$scope.startOver = function(){
