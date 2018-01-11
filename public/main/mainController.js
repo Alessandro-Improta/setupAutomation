@@ -308,7 +308,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 					.then(function(res) {
 						console.log(res.data.message);
 						if (res.data.data) {
-							localStorage.setItem(title, csvs);
+							localStorage.setItem(title, res.data.data);
 						}
 					})
 	};
