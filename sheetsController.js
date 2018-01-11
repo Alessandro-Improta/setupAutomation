@@ -81,7 +81,6 @@ module.exports = {
 	},
 
 	findAndReplace: function(req, res, next) {
-		console.log('find and replace was called');
 		let batchUpdateRequest = req.body.requests;
 		sheets.spreadsheets.batchUpdate({
 			spreadsheetId: newSpreadsheetId,
@@ -102,7 +101,6 @@ module.exports = {
 	},
 
 	getCsvData: function (req, res, next) {
-		console.log('get csv data was called');
 		drive.files.export({
 			fileId: newSpreadsheetId,
 			mimeType: 'text/csv'
