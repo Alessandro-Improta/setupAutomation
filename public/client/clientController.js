@@ -203,7 +203,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		for (let i = 0; i < arr.length; i++) {
 			let filename = localStorage.theater + i;
 			download(filename, arr[i]);
-			section.find('#' + filename).click();
+			section.find('a').click();
 		}
 
 
