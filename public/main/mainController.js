@@ -49,6 +49,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 	let createNewAccountSpreadsheets = function(num) {
 		let deferred = $q.defer();
+		deferred.resolve('done');
 		let id;
 		let newNum;
 
