@@ -50,6 +50,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	let createNewAccountSpreadsheets = function(num) {
 		let id;
 		let newNum;
+
 		if (localStorage.templateId !== 'undefined') {
 			id = localStorage.templateId;
 		} else {
@@ -62,7 +63,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			newNum = '';
 		}
 
-		createEmptySpreadsheet(newNum)
+		let creatingNewAccountSpreadsheets = function(id, num) {
+			createEmptySpreadsheet(num)
 			.then(function(res) {
 				copyTemplateTo(id)
 					.then(function(res) {
@@ -71,13 +73,17 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 								findAndReplace()
 									.then(function(res) {
 										getCsvData()
+										counter +=1
 											.then(function(res) {
-												return counter += 1;
+												return console.log('Done running createNewAccountSpreadsheets ' + newNum);
 											})
 									});
 							});
 					});
 			});
+		}
+
+		return creatingNewAccountSpreadsheets(id, newNum);
 	};
 
 	$scope.startOver = function(){
