@@ -193,17 +193,22 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let download = function(filename, csv) {
-	  let element = angular.element(document).find('section').append('<a href=data:text/csv;charset=utf-8,' +encodeURI(csv)+ ' download=' + filename + '></a>').css('display', 'none');
+		let section = angular.element(document).find('section');
+		section.append('<a id="'+ filename +'" href="data:text/csv;charset=utf-8,' +encodeURI(csv)+ '" download="' + filename + '"></a>').css('display', 'none');
 
-	  element.click();
+		element.click();
 	}
 
 	$scope.downloadCsvs = function() {
+		let section = angular.element(document).find('section');
 		let arr = JSON.parse(localStorage.csvs);
-		let filename = localStorage.theater
 		for (let i = 0; i < arr.length; i++) {
-			download(filename + i, arr[i]);
+			let filename = localStorage.theater + i;
+			download(filename, arr[i]);
+			section.find('#' + filename).click();
 		}
+
+
 	}
 
 
