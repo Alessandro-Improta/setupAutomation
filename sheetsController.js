@@ -3,57 +3,78 @@ const google = auth.google;
 const sheets = google.sheets('v4');
 const drive = google.drive('v3');
 
-let template;
 let newSpreadsheetId;
 let csv;
 
 module.exports = {
-	getTemplate: function(req, res, next) {
-		console.log('got template was called');
-		sheets.spreadsheets.get({
-	  		spreadsheetId: req.body.templateId,
-	 		ranges: [],
-	  		includeGridData: true
-		}, 
-		function (err, response) {
-	  		if(err) {
-	  			console.log('getTemplate ', err);
-		  		res.send({
-		  			message: 'error getting template ' + req.body.templateId
-		  		})
-		  	} else {
-		  		console.log(response);
-		  		template = response;
-		  		res.send({
-					message: 'Got Template'
-				});
-			}
-		})
-	},
-
-	newAccount: function(req, res, next) {
-		console.log('upload copy was called');
+	createEmptySpreadsheet: function(req, res, next) {
 		let title = req.body.title;
-		template.properties.title = title;
 		let resource = {
-			properties: template.properties,
-			sheets: template.sheets
+			properties: {title: title}
 		};
 			
 		sheets.spreadsheets.create({
 			resource: resource
 		}, 
 		function(err, response){
-			console.log('new account callback');
 			if (err) {
 				console.error(title, err);
 				res.send({
-					message: 'Error uploading template copy ' + title
+					message: 'Error creating ' + title
 				})
 			} else {
 				newSpreadsheetId = response.spreadsheetId;
 				res.send({
-					message: 'upload of ' + title + ' succesful!'
+					message: title + ' created succesfully!'
+				})
+			}
+		})
+	},
+
+	copyTemplateTo: function(req, res, next) {
+		sheets.spreadsheets.sheets.copyTo({
+			sheetId: 0,
+	  		spreadsheetId: req.body.templateId,
+	  		resource: {
+	  			destinationSpreadsheetId: newSpreadsheetId
+	  		}
+		}, 
+		function (err, response) {
+	  		if(err) {
+	  			console.log('copyTo ', err);
+		  		res.send({
+		  			message: 'error copying template ' + req.body.templateId
+		  		})
+		  	} else {
+		  		res.send({
+					message: 'Template copied'
+				});
+			}
+		})
+	},
+
+	deleteEmptySheetInNewSpreadsheet: function(req, res, next) {
+		sheets.spreadsheets.batchUpdate({
+			spreadsheetId: newSpreadsheetId,
+			resource: {
+				requests: [
+					{
+						deleteSheet: {
+							sheetId: 0
+						}
+					}
+				]
+			}
+		},
+		function(err, response) {
+			if (err) {
+				console.log('deleteEmptySheetInNewSpreadsheet ', err);
+				res.send({
+					message: 'Could not delete empty sheet in ' + newSpreadsheetId
+				})
+			} else {
+				res.send({
+					message: 'successfully deleted empty sheet in ' + newSpreadsheetId
 				})
 			}
 		})

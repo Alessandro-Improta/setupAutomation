@@ -15,6 +15,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	for (const prop in templateIds) {
 		templatesArr.push(templateIds[prop]);
 	}
+	let counter = 0;
 
 	let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
 	let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
@@ -26,25 +27,53 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
-					createNewAccountSpreadsheets();
+					createNewAccountSpreadsheets(counter)
+						.then(function(res) {
+							createNewAccountSpreadsheets(counter)
+								.then(function(res) {
+									createNewAccountSpreadsheets(counter)
+										.then(function(res) {
+											revokeToken();
+										});
+								});
+						});
 				} else {
-					createNewAccountSpreadsheetsFromCustomTemplate();
+					createNewAccountSpreadsheets()
+						.then(function(res) {
+							revokeToken();
+						})
 				}
 			})
 	};
 
-	//TESTING
-	//*********************************************
-	$scope.testTemplate = function() {
-		addData(keys, values);
-		getTemplate('1kO2kc43hlcxwqU3LDkAutZkddO4FrXpgafFEQJsTjmk');
-	};
+	let createNewAccountSpreadsheets = function(num) {
+		if (localStorage.templateId !== 'undefined') {
+			let id = localStorage.templateId;
+		} else {
+			let id = templatesArr[num];
+		}
+		
+		if (num) {
+			let newNum = num + 1;	
+		} else {
+			let newNum = '';
+		}
 
-	$scope.testUpload = function () {
-		uploadCopyOfTemplate();
+		createEmptySpreadsheet(newNum)
+			.then(function(res) {
+				copyTemplateTo(id)
+					.then(function(res) {
+						deleteEmptySheetInNewSpreadsheet()
+							.then(function(res) {
+								counter += 1;
+								findAndReplace()
+									.then(function(res) {
+										getCsvData();
+									});
+							});
+					});
+			});
 	};
-
-	//*********************************************
 
 	$scope.startOver = function(){
 		clearData();
@@ -110,128 +139,16 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		}
 		inputData = localStorage;
 		return console.log(inputData);
-	};
-
-	let createNewAccountSpreadsheetsFromCustomTemplate = function() {
-		getTemplate(localStorage.templateId)
-			.then(function(res) {
-				uploadCopyOfTemplate()
-					.then(function(res) {
-						findAndReplace()
-							.then(function(res) {
-								getCsvData()
-									.then(function(res) {
-										revokeToken()
-											.then(function(res){
-												$scope.show1 = false;
-												$scope.show2 = true;
-											});
-									})
-							});
-					});
-			});
-	};
-
-	let createNewAccountSpreadsheets = function() {
-		let counter = 0;
-		let templateId;
-		getTemplate(templatesArr[counter])
-				.then(function(res) {
-					uploadCopyOfTemplate(counter)
-						.then(function(res){
-							findAndReplace()
-								.then(function(res) {
-									counter += 1;
-									getCsvData()
-										.then(function(res){
-											if (counter < templatesArr.length) {
-												getTemplate(templatesArr[counter])
-													.then(function(res) {
-														uploadCopyOfTemplate(counter)
-															.then(function(res){
-																findAndReplace()
-																	.then(function(res) {
-																		counter += 1;
-																		getCsvData()
-																			.then(function(res){
-																				if (counter < templatesArr.length) {
-																					getTemplate(templatesArr[counter])
-																						.then(function(res) {
-																							uploadCopyOfTemplate(counter)
-																								.then(function(res){
-																									findAndReplace()
-																										.then(function(res) {
-																											counter += 1;
-																											getCsvData()
-																												.then(function(res) {		
-																													if (counter < templatesArr.length) {
-																														getTemplate(templatesArr[counter])
-																															.then(function(res) {
-																																uploadCopyOfTemplate(counter)
-																																	.then(function(res){
-																																		findAndReplace()
-																																			.then(function(res) {
-																																				counter += 1;
-																																				getCsvData()
-																																			})
-																																	})
-																															})					
-																													} else {
-																														revokeToken()
-																															.then(function(res){
-																																$scope.show1 = false;
-																																$scope.show2 = true;
-																															});
-																													}
-																												})
-																										});
-																								});
-																						});
-																				} else {
-																					revokeToken()
-																						.then(function(res) {
-																							$scope.show1 = false;
-																							$scope.show2 = true;
-																						})
-																				}
-																			});
-																	});															
-															})
-													});
-											} else {
-												revokeToken()
-													.then(function(res) {
-														$scope.show1 = false;
-														$scope.show2 = true;
-													})
-											}		
-										});
-								});
-						});
-				});
 	};							
 
-	let getTemplate = function(id) {
-		let templateId = id;
-		return $http({
-			method: "PUT",
-			url: appUrl + '/template',
-			data: {
-				templateId: templateId
-			}
-		})
-		.then(function(res){
-			console.log(res.data.message);
-		})
-	};
-
-	let uploadCopyOfTemplate = function(num) {
+	let createEmptySpreadsheet = function(num) {
 		let title;
 		if (num) {
 			title = inputData.theater + num;
 		} else {
 			title = inputData.theater;
 		}
+
 		return $http({
 			method: 'POST',
 			url: appUrl + '/newAccount',
@@ -243,6 +160,27 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			console.log(res.data.message)
 		})
 	};
+
+	let copyTemplateTo = function(id) {
+		return $http({
+			method: "PUT",
+			url: appUrl + '/template',
+			data: {
+				templateId: id
+			}
+		})
+		.then(function(res){
+			console.log(res.data.message);
+		})
+	};
+
+	let deleteEmptySheetInNewSpreadsheet = function() {
+		return $http.put(appUrl + 'deleteEmptySheetInNewSpreadsheet')
+					.then(function(res) {
+						console.log(res.data.message);
+					})
+	}
+
 
 	let findAndReplace = function() {
 		let requests = []
@@ -318,6 +256,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 						console.log(res.data.message);
 						if (res.data.data) {
 							csvs.push(res.data.data);
+							localStorage.setItem('csvs', csvs);
 							console.log(csvs);
 						}
 					})

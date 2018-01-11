@@ -28,11 +28,12 @@ app.get('/getProfiles', analytics.getProfiles);
 app.get('/getGoals', analytics.getGoals);
 app.get('/getCsvData', sheets.getCsvData);
 
-app.put('/template', sheets.getTemplate);
 app.put('/tokens', auth.setTokens);
+app.put('/template', sheets.copyTemplateTo);
 app.put('/findAndReplace', sheets.findAndReplace);
+app.put('/deleteEmptySheetInNewSpreadsheet', sheets.deleteEmptySheetInNewSpreadsheet);
 
-app.post('/newAccount', sheets.newAccount);
+app.post('/newAccount', sheets.createEmptySpreadsheet);
 app.post('/createGTMContainer', gtm.createGTMContainer);
 app.post('/createGTMVariables', gtm.createGTMVariables);
 app.post('/createGTMTag', gtm.createTags);
