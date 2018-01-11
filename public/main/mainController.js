@@ -63,8 +63,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			newNum = '';
 		}
 
-		let creatingNewAccountSpreadsheets = function(id, num) {
-			createEmptySpreadsheet(num)
+		createEmptySpreadsheet(num)
 			.then(function(res) {
 				copyTemplateTo(id)
 					.then(function(res) {
@@ -72,18 +71,14 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 							.then(function(res) {
 								findAndReplace()
 									.then(function(res) {
-										getCsvData()
 										counter +=1
-											.then(function(res) {
-												return console.log('Done running createNewAccountSpreadsheets ' + newNum);
-											})
+										getCsvData()
 									});
 							});
 					});
 			});
-		}
 
-		return creatingNewAccountSpreadsheets(id, newNum);
+		return console.log('Done running createNewAccountSpreadsheets ' + newNum);
 	};
 
 	$scope.startOver = function(){
