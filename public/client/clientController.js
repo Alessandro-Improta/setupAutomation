@@ -194,7 +194,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 
 	let download = function(filename, csv) {
 		var element = document.createElement('a');
-		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURI(csv));
+		element.setAttribute('href', 'data:text/csv;charset=utf-8,' + encodeURI(csv));
 		element.setAttribute('download', filename);
 
 		element.style.display = 'none';
