@@ -5,7 +5,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	$scope.show1 = false;
 	$scope.show2 = false;
 	let inputData;
-	let csvs = [];
+	let title;
 	const templateIds = {
 		1: '1STsOrCzZrkRbLVjAIHP9fFCL541mfO7ns7LUQVEnyic',
 		2: '1F4zwvoXEPmZp3nYrelwFa39pd7cb_9ZiXR0grodauA0',
@@ -196,7 +196,6 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};							
 
 	let createEmptySpreadsheet = function(num) {
-		let title;
 		if (num) {
 			title = inputData.theater + num;
 		} else {
@@ -309,9 +308,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 					.then(function(res) {
 						console.log(res.data.message);
 						if (res.data.data) {
-							csvs.push(res.data.data);
-							localStorage.setItem('csvs', csvs);
-							console.log(csvs);
+							localStorage.setItem(title, csvs);
 						}
 					})
 	};
