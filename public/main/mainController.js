@@ -67,12 +67,11 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 					.then(function(res) {
 						deleteEmptySheetInNewSpreadsheet()
 							.then(function(res) {
-								counter += 1;
 								findAndReplace()
 									.then(function(res) {
 										getCsvData()
 											.then(function(res) {
-												return console.log('createEmptySpreadsheet completed');
+												return counter += 1;
 											})
 									});
 							});
@@ -180,7 +179,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	};
 
 	let deleteEmptySheetInNewSpreadsheet = function() {
-		return $http.put(appUrl + 'deleteEmptySheetInNewSpreadsheet')
+		return $http.put(appUrl + '/deleteEmptySheetInNewSpreadsheet')
 					.then(function(res) {
 						console.log(res.data.message);
 					})
