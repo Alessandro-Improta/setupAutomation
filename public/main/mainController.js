@@ -15,12 +15,9 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 	for (const prop in templateIds) {
 		templatesArr.push(templateIds[prop]);
 	}
-	let counter = 0;
-	let newNum = counter + 1;
-
-	
 
 	$scope.mainAccountActions = function() {
+		let counter = 0;
 		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
 		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		$scope.show = false;
@@ -29,7 +26,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 		sendLinkRequest()
 			.then(function(res){
 				if (localStorage.templateId === 'undefined') {
-					createEmptySpreadsheet(newNum)
+					createEmptySpreadsheet(counter)
 						.then(function(res) {
 							copyTemplateTo(templateIds[1])
 								.then(function(res) {
@@ -40,7 +37,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 													counter +=1
 													getCsvData()
 														.then(function(res) {
-															createEmptySpreadsheet(newNum)
+															createEmptySpreadsheet(counter)
 																.then(function(res) {
 																	copyTemplateTo(templateIds[2])
 																		.then(function(res) {
@@ -51,7 +48,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 																							counter +=1
 																							getCsvData()
 																								.then(function(res) {
-																									createEmptySpreadsheet(newNum)
+																									createEmptySpreadsheet(counter)
 																										.then(function(res) {
 																											copyTemplateTo(templateIds[3])
 																												.then(function(res) {
