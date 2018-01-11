@@ -203,17 +203,15 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		element.click();
 
 		document.body.removeChild(element);
-	}
+	};
 
 	$scope.downloadCsvs = function() {
 		let arr = JSON.parse(localStorage.csvs);
 		for (let i = 0; i < arr.length; i++) {
 			let filename = localStorage.theater + i;
 			download(filename, arr[i]);
-		}
-
-
-	}
+		};
+	};
 
 
 	(function(){
