@@ -65,22 +65,28 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			newNum = '';
 		}
 
-		createEmptySpreadsheet(newNum)
-			.then(function(res) {
-				copyTemplateTo(id)
-					.then(function(res) {
-						deleteEmptySheetInNewSpreadsheet()
-							.then(function(res) {
-								findAndReplace()
-									.then(function(res) {
-										counter +=1
-										getCsvData()
-									});
-							});
-					});
-			});
+		let creatingEmptySpreadsheet = function() {
+			createEmptySpreadsheet(newNum)
+				.then(function(res) {
+					copyTemplateTo(id)
+						.then(function(res) {
+							deleteEmptySheetInNewSpreadsheet()
+								.then(function(res) {
+									findAndReplace()
+										.then(function(res) {
+											counter +=1
+											getCsvData()
+												.then(function(res) {
+													return deferred.promise
+												})
+										});
+								});
+						});
+				});			
+		}
 
-		return deferred.promise;
+
+		return creatingEmptySpreadsheet();
 	};
 
 	$scope.startOver = function(){
