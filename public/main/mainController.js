@@ -65,7 +65,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			newNum = '';
 		}
 
-		createEmptySpreadsheet(num)
+		createEmptySpreadsheet(newNum)
 			.then(function(res) {
 				copyTemplateTo(id)
 					.then(function(res) {
@@ -75,13 +75,12 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 									.then(function(res) {
 										counter +=1
 										getCsvData()
-											.then(function(res) {
-												return deferred.promise;
-											})
 									});
 							});
 					});
 			});
+
+		return deferred.promise;
 	};
 
 	$scope.startOver = function(){
