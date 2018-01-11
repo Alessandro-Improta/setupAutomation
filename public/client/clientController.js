@@ -198,12 +198,14 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	}
 
 	$scope.downloadCsvs = function() {
+		let element;
 		let section = angular.element(document).find('section');
 		let arr = JSON.parse(localStorage.csvs);
 		for (let i = 0; i < arr.length; i++) {
 			let filename = localStorage.theater + i;
 			download(filename, arr[i]);
-			section.find('a').click();
+			element = section.find('a');
+			element.click();
 		}
 
 
