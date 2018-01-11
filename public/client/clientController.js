@@ -193,7 +193,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	let download = function(filename, csv) {
-	  let element = angular.element('#downloads').append('<a href=data:text/csv;charset=utf-8,' +encodeURI(csv)+ ' download=' + filename + '></a>').css('display', 'none');
+	  let element = angular.element('section').append('<a href=data:text/csv;charset=utf-8,' +encodeURI(csv)+ ' download=' + filename + '></a>').css('display', 'none');
 
 	  element.click();
 	}
