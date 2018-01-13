@@ -6,10 +6,11 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	// Testing
 	// ********************************************************
 	let adwordsAccount = function() {
+		console.log('running adwordsAccount');
 		return $http.get(appUrl + '/adwordsAccount')
-			 .then(function(res) {
-			 	console.log(res.data.message);
-			 })
+					.then(function(res) {
+						console.log(res.data.message);
+					});
 	};
 	// ********************************************************
 

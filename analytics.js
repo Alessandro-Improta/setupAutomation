@@ -126,7 +126,7 @@ module.exports = {
 			resource: {
 				adWordsAccounts: [{
 					kind: "analytics#adWordsAccount",
-					customerId: req.body.customerId,
+					customerId: '7908685882',
 					autoTaggingEnabled: "true"
 				}]
 			}
