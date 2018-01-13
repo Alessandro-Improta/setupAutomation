@@ -7,7 +7,11 @@ const axios = require('axios');
 
  
 let adwordsUser;
-let oauth2Client;
+let oauth2Client = new OAuth2(
+	'1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
+	'D1ht5Wso2vydo5XIKD4_fO3G',
+	'http://fillyourseats.zapto.org:3000'
+);
 
 // generate a url that asks permissions for Google+ and Google Calendar scopes
 var scopes = [
