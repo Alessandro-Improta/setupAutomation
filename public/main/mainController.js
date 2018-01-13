@@ -60,7 +60,7 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 																																	counter +=1
 																																	getCsvData()
 																																		.then(function(res) {
-																																			console.log(JSON.parse(localStorage.csvs));
+																																			revokeToken()
 																																			$scope.show1 = false;
 																																			$scope.show2 = true;
 																																		})
