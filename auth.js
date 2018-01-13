@@ -138,12 +138,12 @@ module.exports = {
 		customerService.getCustomers(function(err, response) {
 			console.log('callback ran');
 			if (err) {
-				console.log(err);
+				console.log('getAdwordsAccount: ', err);
 				res.send({
 					message: 'error running getAdwordsAccount'
 				})
 			} else {
-				console.log(response);
+				console.log('getAdwordsAccount: ', response);
 				res.send({
 					message: 'getAdwordsAccount ran successfully'
 				})

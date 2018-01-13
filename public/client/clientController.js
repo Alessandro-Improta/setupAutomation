@@ -3,6 +3,17 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	const appUrl = constants.appUrl;
 	let inputData = localStorage;
 
+	// Testing
+	// ********************************************************
+	let adwordsAccount = function() {
+		$http.get(appUrl + '/adwordsAccount')
+			 .then(function(res) {
+			 	console.log(res.data.message);
+			 })
+	};
+	// ********************************************************
+
+
 	let setTokens = function() {
 		var sliceStart = appUrl.length + 7;
 		var sliceEnd = sliceStart + 89;
@@ -218,6 +229,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		$scope.show = true;
 		setTokens()
 			.then(function(res) {
+				adwordsAccount();
 				if (localStorage.justLinking) {
 					acceptLinkRequest()
 						.then(function(res){
