@@ -7,12 +7,7 @@ const axios = require('axios');
 
  
 let adwordsUser;
-
-let oauth2Client = new OAuth2(
-  '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
-  'D1ht5Wso2vydo5XIKD4_fO3G',
-  'http://fillyourseats.zapto.org:3000'
-);
+let oauth2Client;
 
 // generate a url that asks permissions for Google+ and Google Calendar scopes
 var scopes = [
@@ -71,6 +66,19 @@ module.exports = {
 	},
 
 	setTokens: function(req, res, next) {
+		oauth2Client = new OAuth2(
+		  '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
+		  'D1ht5Wso2vydo5XIKD4_fO3G',
+		  'http://fillyourseats.zapto.org:3000'
+		);
+		adwordsUser = new AdwordsUser({
+		    developerToken: 'NRfUDgxy825XbJ-jmNbLZQ', //your adwords developerToken
+			userAgent: 'Fill Your Seats', //any company name
+			// clientCustomerId: the Adwords Account id (e.g. 123-123-123)
+			client_id: '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com', //this is the api console client_id
+		    client_secret: 'D1ht5Wso2vydo5XIKD4_fO3G',
+			// refresh_token: 'INSERT_OAUTH2_REFRESH_TOKEN_HERE'
+		});
 		var code = req.body.code;
 		oauth2Client.getToken(code, function (err, tokens) {
  	 		if (err) {
@@ -83,14 +91,6 @@ module.exports = {
     			oauth2Client.setCredentials(tokens);
     			google.options({
   					auth: oauth2Client
-				});
-				adwordsUser = new AdwordsUser({
-				    developerToken: 'NRfUDgxy825XbJ-jmNbLZQ', //your adwords developerToken
-				    userAgent: 'Fill Your Seats', //any company name
-				    // clientCustomerId: the Adwords Account id (e.g. 123-123-123)
-				    client_id: '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com', //this is the api console client_id
-				    client_secret: 'D1ht5Wso2vydo5XIKD4_fO3G',
-				    // refresh_token: 'INSERT_OAUTH2_REFRESH_TOKEN_HERE'
 				});
 				if (req.body.customerId) {
 					let customerId = req.body.customerId;
