@@ -99,6 +99,7 @@ module.exports = {
 				} else {
 					adwordsUser.credentials.clientCustomerId = '790-868-5882'
 				}
+				console.log(adwordsUser.credentials.clientCustomerId);
     			adwordsUser.credentials.refresh_token = oauth2Client.credentials.refresh_token;
     			adwordsUser.credentials.access_token  = oauth2Client.credentials.access_token;
     			res.send({
