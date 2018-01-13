@@ -229,7 +229,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 									return;
 								})
 						});
-				}
+				} else {
 				getTagManagerAccount()
 					.then(function(res){
 						createGTMContainer()
@@ -271,6 +271,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 									})
 							})
 					})
+				}
 			})
 	})();
 
