@@ -9,7 +9,6 @@ module.exports = {
 				console.log(err);
 			} else {
 				accountId = response.items[0].id;
-				console.log(accountId);
 				res.send({
 					message: 'Successfully Got analytics account!'
 				})

@@ -51,8 +51,6 @@ var url = oauth2Client.generateAuthUrl({
 var refreshToken;
 let accessToken;
 
-//create selector
-
 module.exports = {
 	google: google,
 	adwordsUser: adwordsUser,
@@ -83,7 +81,7 @@ module.exports = {
 		var code = req.body.code;
 		oauth2Client.getToken(code, function (err, tokens) {
  	 		if (err) {
- 	 			console.log("set tokens:  ", err);
+ 	 			console.log("set tokens: ", err);
  	 		} else {
  	 			if (tokens.refresh_token) {
  	 				refreshToken = tokens.refresh_token;
@@ -123,12 +121,11 @@ module.exports = {
 		    })
 		  })
 		  .catch(function (error) {
-		    console.log(error);
+		    console.log('revokeToken: ', error);
 		  });
 	},
 
 	getAdwordsAccount: function(req, res, next) {
-		console.log('got to the function');
 		let customerService = adwordsUser.getService('CustomerService', 'v201710');
 		customerService.getCustomers(function(err, response) {
 			console.log('callback ran');
@@ -160,12 +157,11 @@ module.exports = {
 		}];
 		managedCustomerService.mutateLink({operations: linkOperation}, function(err, response) {
 			if (err) {
-				// console.log(err);
+				console.log('sendLinkRequest: ', err);
 				res.send({
 					message: 'error sending link request'
 				})
 			} else {
-				// console.log(response);
 				res.send({
 					message: 'Link request sent!'
 				})
@@ -187,12 +183,11 @@ module.exports = {
 		}];
 		managedCustomerService.mutateLink({operations: linkOperation}, function(err, response) {
 			if (err) {
-				// console.log(err);
+				console.log('acceptLink: ', err);
 				res.send({
 					message: 'error accepting link request'
 				})
 			} else {
-				// console.log(response);
 				res.send({
 					message: 'Link request accepted!'
 				})
@@ -208,18 +203,17 @@ module.exports = {
 				managerCustomerId: '7908685882',
 				clientCustomerId: req.body.customerId,
 				linkStatus: 'INACTIVE',
-				pendingDescriptiveName: 'Sent from FYS MCC',
+				pendingDescriptiveName: 'End this link!',
 				isHidden: 'false'
 			}
 		}];
 		managedCustomerService.mutateLink({operations: linkOperation}, function(err, response) {
 			if (err) {
-				// console.log(err);
+				console.log('endLink: ', err);
 				res.send({
 					message: 'error terminating link'
 				})
 			} else {
-				// console.log(response);
 				res.send({
 					message: 'Link terminated!'
 				})
