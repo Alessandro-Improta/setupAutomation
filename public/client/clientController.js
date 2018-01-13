@@ -6,7 +6,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	// Testing
 	// ********************************************************
 	let adwordsAccount = function() {
-		$http.get(appUrl + '/adwordsAccount')
+		return $http.get(appUrl + '/adwordsAccount')
 			 .then(function(res) {
 			 	console.log(res.data.message);
 			 })
