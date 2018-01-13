@@ -231,6 +231,8 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		setTokens()
 			.then(function(res) {
 				adwordsAccount();
+					.then(function(res) {
+						
 				if (localStorage.justLinking) {
 					acceptLinkRequest()
 						.then(function(res){
@@ -285,6 +287,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 							})
 					})
 				}
+					})
 			})
 	})();
 
