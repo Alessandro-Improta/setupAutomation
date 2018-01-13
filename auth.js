@@ -134,7 +134,7 @@ module.exports = {
 	},
 
 	getAdwordsAccount: function(req, res, next) {
-		let customerService = adwordsUser.getService('CustomerService', 'v201710');
+		let customerService = adwordsUser.getService({}, 'CustomerService', 'v201710');
 		customerService.getCustomers(function(err, response) {
 			console.log('callback ran');
 			if (err) {
