@@ -227,7 +227,6 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		$scope.show = true;
 		setTokens()
 			.then(function(res) {
-				getPendingRequests()
 				if (localStorage.justLinking) {
 					acceptLinkRequest()
 						.then(function(res){
