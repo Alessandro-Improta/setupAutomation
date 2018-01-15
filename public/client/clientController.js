@@ -97,7 +97,8 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			method: "POST",
 			url: appUrl + '/acceptLinkRequest',
 			data: {
-				customerId: localStorage.customerId
+				customerId: localStorage.customerId,
+				name: localStorage.theater
 			}
 		})
 		.then(function(res) {
@@ -184,7 +185,8 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 			method: 'POST',
 			url: appUrl + '/endLink',
 			data: {
-				customerId: localStorage.customerId
+				customerId: localStorage.customerId,
+				name: localStorage.theater
 			}
 		})
 		.then(function(res) {

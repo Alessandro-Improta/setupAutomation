@@ -152,7 +152,7 @@ module.exports = {
 				managerCustomerId: '7908685882',
 				clientCustomerId: req.body.customerId,
 				linkStatus: 'PENDING',
-				pendingDescriptiveName: 'Sent from FYS MCC',
+				pendingDescriptiveName: req.body.name,
 				isHidden: 'false'
 			}
 		}];
@@ -199,7 +199,7 @@ module.exports = {
 				managerCustomerId: '7908685882',
 				clientCustomerId: req.body.customerId,
 				linkStatus: 'ACTIVE',
-				pendingDescriptiveName: 'Sent from FYS MCC',
+				pendingDescriptiveName: req.body.name,
 				isHidden: 'false'
 			}
 		}];
@@ -225,7 +225,7 @@ module.exports = {
 				managerCustomerId: '7908685882',
 				clientCustomerId: req.body.customerId,
 				linkStatus: 'INACTIVE',
-				pendingDescriptiveName: 'End this link!',
+				pendingDescriptiveName: req.body.name,
 				isHidden: 'false'
 			}
 		}];

@@ -142,7 +142,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 			method: "POST",
 			url: appUrl + '/sendLinkRequest',
 			data: {
-				customerId: localStorage.customerId
+				customerId: localStorage.customerId,
+				name: localStorage.theater
 			}
 		})
 		.then(function(res){
