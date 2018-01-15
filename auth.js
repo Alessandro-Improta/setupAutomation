@@ -174,7 +174,11 @@ module.exports = {
 
 	getPendingRequests: function(req, res, next) {
 		let managedCustomerService = adwordsUser.getService('ManagedCustomerService');
-		managedCustomerService.getPendingInvitations(function(err, response) {
+		managedCustomerService.getPendingInvitations({
+			managerCustomerIds: [],
+			clientCustomerIds: []
+		},
+		function(err, response) {
 			if (err) {
 				console.log('get invitations: ', err);
 				res.send({
