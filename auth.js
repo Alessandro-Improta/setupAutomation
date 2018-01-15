@@ -41,13 +41,11 @@ var url = oauth2Client.generateAuthUrl({
   scope: scopes
 });
 
-var refreshToken;
+let refreshToken;
 let accessToken;
 
 module.exports = {
 	google: google,
-	adwordsUser: adwordsUser,
-	refreshToken: refreshToken,
 
 	firstLogIn: function(req, res, next) {
 		res.send({
@@ -105,7 +103,7 @@ module.exports = {
     			adwordsUser.credentials.refresh_token = oauth2Client.credentials.refresh_token;
     			adwordsUser.credentials.access_token  = oauth2Client.credentials.access_token;
     			res.send({
-  					message: "successfully got and set tokens! " + refreshToken 
+  					message: "successfully got and set tokens! " + accessToken 
   				}); 			
   			}
 		});	
