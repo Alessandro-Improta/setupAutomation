@@ -120,13 +120,16 @@ module.exports = {
 	},
 
 	linkAnalytics: function(req, res, next) {
+		let customerId = req.body.customerId;
+		let customerIdArr = customerId.split("");
+		let newCustomerId = customerIdArr[0] + customerIdArr[1] + customerIdArr[2] + '-' + customerIdArr[3] + customerIdArr[4] + customerIdArr[5] + '-' + customerIdArr[6] + customerIdArr[7] + customerIdArr[8] + customerIdArr[9];
 		analytics.management.webPropertyAdWordsLinks.insert({
 			accountId: accountId,
 			webPropertyId: webPropertyId,
 			resource: {
 				adWordsAccounts: [{
 					kind: "analytics#adWordsAccount",
-					customerId: '7908685882',
+					customerId: newCustomerId,
 					autoTaggingEnabled: "true"
 				}]
 			}
