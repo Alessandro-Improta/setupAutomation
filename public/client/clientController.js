@@ -134,14 +134,22 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 	};
 
 	$scope.startOver = function(){
-		endLink()
-			.then(function(res) {		
-				clearData();
-				revokeToken()
-					.then(function(res){
-						goHome();
-					});
-			})
+		if (!localStorage.justLinking) {
+			endLink();
+				.then(function(res) {		
+					clearData();
+					revokeToken()
+						.then(function(res){
+							goHome();
+						});
+				})
+		} else {
+			clearData();
+			revokeToken()
+				.then(function(res){
+					goHome();
+				});
+		}
 	};
 
 	let goHome = function(){
