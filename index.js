@@ -27,6 +27,7 @@ app.get('/getEmail', gtm.getEmail);
 app.get('/getProfiles', analytics.getProfiles);
 app.get('/getGoals', analytics.getGoals);
 app.get('/getCsvData', sheets.getCsvData);
+app.get('/getPendingRequests', auth.getPendingRequests);
 
 app.put('/tokens', auth.setTokens);
 app.put('/template', sheets.copyTemplateTo);

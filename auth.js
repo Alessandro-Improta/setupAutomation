@@ -172,9 +172,26 @@ module.exports = {
 		})
 	},
 
+	getPendingRequests: function(req, res, next) {
+		let managedCustomerService = adwordsUser.getService('ManagedCustomerService');
+		managedCustomerService.getPendingInvitations(function(err, response) {
+			if (err) {
+				console.log('get invitations: ', err);
+				res.send({
+					message: 'could not get invitations'
+				})
+			} else {
+				console.log('get invitations response: ', response);
+				res.send({
+					message: 'invitations got'
+				})
+			}
+		})
+	},
+
 	acceptLinkRequest: function(req, res, next) {
 		let managedCustomerService = adwordsUser.getService('ManagedCustomerService');
-		let linkOperations = [{
+		let linkOperation = [{
 			operator: "SET",
 			operand: {
 				managerCustomerId: '7908685882',
@@ -184,7 +201,7 @@ module.exports = {
 				isHidden: 'false'
 			}
 		}];
-		managedCustomerService.mutateLink({operations: linkOperations}, function(err, response) {
+		managedCustomerService.mutateLink({operations: linkOperation}, function(err, response) {
 			if (err) {
 				console.log('acceptLink: ', err);
 				res.send({

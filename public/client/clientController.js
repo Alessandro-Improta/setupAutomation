@@ -213,11 +213,20 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 		};
 	};
 
+	let getPendingRequests = function() {
+		return $http.get(appUrl + '/getPendingRequests')
+					.then(function(res) {
+						console.log(res.data.message);
+					})
+	}
+
 
 	(function(){
 		$scope.show = true;
 		setTokens()
 			.then(function(res) {
+				getPendingRequests()
+					.then(function(res) {
 				if (localStorage.justLinking) {
 					acceptLinkRequest()
 						.then(function(res){
@@ -272,6 +281,8 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 							})
 					})
 				}
+						
+					})
 			})
 	})();
 
