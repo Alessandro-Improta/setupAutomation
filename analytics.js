@@ -127,7 +127,7 @@ module.exports = {
 			accountId: accountId,
 			webPropertyId: webPropertyId,
 			resource: {
-				name: "Adwords Link"
+				name: "Adwords Link",
 				adWordsAccounts: [{
 					kind: "analytics#adWordsAccount",
 					customerId: newCustomerId,
