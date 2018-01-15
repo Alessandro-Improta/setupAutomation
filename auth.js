@@ -80,11 +80,6 @@ module.exports = {
 	},
 
 	setTokens: function(req, res, next) {
-		oauth2Client = new OAuth2(
-		  '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
-		  'D1ht5Wso2vydo5XIKD4_fO3G',
-		  'http://fillyourseats.zapto.org:3000'
-		);
 		var code = req.body.code;
 		oauth2Client.getToken(code, function (err, tokens) {
  	 		if (err) {
@@ -134,7 +129,7 @@ module.exports = {
 	},
 
 	getAdwordsAccount: function(req, res, next) {
-		let customerService = adwordsUser.getService({}, 'CustomerService', 'v201710');
+		let customerService = adwordsUser.getService('CustomerService', 'v201710');
 		customerService.getCustomers(function(err, response) {
 			console.log('callback ran');
 			if (err) {
@@ -179,17 +174,17 @@ module.exports = {
 
 	acceptLinkRequest: function(req, res, next) {
 		let managedCustomerService = adwordsUser.getService('ManagedCustomerService');
-		let linkOperation = [{
+		let linkOperations = [{
 			operator: "SET",
 			operand: {
 				managerCustomerId: '7908685882',
 				clientCustomerId: req.body.customerId,
 				linkStatus: 'ACTIVE',
-				pendingDescriptiveName: 'Accept link',
+				pendingDescriptiveName: 'Sent from FYS MCC',
 				isHidden: 'false'
 			}
 		}];
-		managedCustomerService.mutateLink({operations: linkOperation}, function(err, response) {
+		managedCustomerService.mutateLink({operations: linkOperations}, function(err, response) {
 			if (err) {
 				console.log('acceptLink: ', err);
 				res.send({
