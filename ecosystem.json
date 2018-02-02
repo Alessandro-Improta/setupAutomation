@@ -9,7 +9,7 @@
 	"deploy" : {
 		"production" : {
 			"user" : "alessandro",
-			"host" : "fillyourseats.zapto.org",
+			"host" : "fillyourseatssetup.zapto.org",
 			"port" : "22",
 			"ref"  : "origin/master",
 			"repo" : "https://github.com/Alessandro-Improta/setupAutomation.git",

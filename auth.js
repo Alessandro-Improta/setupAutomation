@@ -18,7 +18,7 @@ let adwordsUser = new AdwordsUser({
 let oauth2Client = new OAuth2(
 	'1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
 	'D1ht5Wso2vydo5XIKD4_fO3G',
-	'http://fillyourseats.zapto.org:3000'
+	'http://fillyourseatssetup.zapto.org:3000'
 );
 
 var scopes = [
@@ -57,7 +57,7 @@ module.exports = {
 		oauth2Client = new OAuth2(
 		  '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
 		  'D1ht5Wso2vydo5XIKD4_fO3G',
-		  'http://fillyourseats.zapto.org:3000'
+		  'http://fillyourseatssetup.zapto.org:3000'
 		);
 		adwordsUser = new AdwordsUser({
 		    developerToken: 'NRfUDgxy825XbJ-jmNbLZQ', //your adwords developerToken
