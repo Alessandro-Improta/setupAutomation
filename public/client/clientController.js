@@ -135,7 +135,7 @@ angular.module('setupApp').controller('clientController', function($http, $scope
 
 	$scope.startOver = function(){
 		if (!localStorage.justLinking) {
-			endLink();
+			endLink()
 				.then(function(res) {		
 					clearData();
 					revokeToken()
