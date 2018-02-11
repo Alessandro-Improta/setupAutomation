@@ -547,7 +547,7 @@ let containerId;
 let publicId = "TEST";
 let emailAddress;
 let email =  "From: " + emailAddress + "\r\n" +
-  "To: Dixion@fillyourseats.com\r\n" +
+  "To: accounts@fillyourseats.com\r\n" +
   "Subject: GTM Installation Tracking Codes\r\n\r\n" +
 
   "Paste this code as high in the <head> of the page as possible:                      \

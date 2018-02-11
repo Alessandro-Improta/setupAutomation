@@ -1,5 +1,8 @@
-<div ng-show="show">
-	<img id="wait" src="./img/wait.gif">
+<div>
+	<img ng-show="show" id="wait" src="./img/wait.gif">
+	<div ng-repeat="message in messages">
+		<p> {{message}} </p>
+	</div>
 </div>
 
 <div ng-hide="show">
@@ -16,6 +19,5 @@
 	<br>
 	4. Click the Start Over section!
 	<section ng-click="downloadCsvs()">Download</section>
+	<section ng-click="startOver()">Start Over</section>
 </div>
-<section ng-click="startOver()">Start Over</section>
-	<section></section>

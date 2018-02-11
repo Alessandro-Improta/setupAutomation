@@ -8,15 +8,38 @@ const analytics = require('./analytics.js');
 
 
 const app = express();
+const port = 3000;
+const serveFile = function(req, res, next) {
+  res.sendFile("/public/index.html", {root: __dirname })
+};
 
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
+app.all('/newOrLink', serveFile);
+app.all('/templateQuestion', serveFile);
+app.all('/enterTemplate', serveFile);
+app.all('/theater', serveFile);
+app.all('/cityState', serveFile);
+app.all('/customerId', serveFile);
+app.all('/website', serveFile);
+app.all('/homepage', serveFile);
+app.all('/about', serveFile);
+app.all('/directions', serveFile);
+app.all('/buyTickets', serveFile);
+app.all('/externalTicketing', serveFile);
+app.all('/address', serveFile);
+app.all('/averageTicketPrice', serveFile);
+app.all('/accountsLogIn', serveFile);
+app.all('/accountsActions', serveFile);
+app.all('/clientLogIn', serveFile);
+app.all('/clientActions', serveFile);
+app.all('/customerIdLink', serveFile);
+app.all('/accountsLogInLink', serveFile);
+app.all('/accountsActionsLink', serveFile);
+app.all('/clientLogInLink', serveFile);
+app.all('/clientActionsLink', serveFile);
 
-const port = 3000;
-
-app.get('/firstLogIn', auth.firstLogIn);
-app.get('/secondLogIn', auth.secondLogIn);
 app.get('/getTagManagerAccount', gtm.getTagManagerAccount);
 app.get('/getGTMContainer', gtm.getGTMContainer);
 app.get('/adwordsAccount', auth.getAdwordsAccount)
@@ -29,6 +52,7 @@ app.get('/getGoals', analytics.getGoals);
 app.get('/getCsvData', sheets.getCsvData);
 app.get('/getPendingRequests', auth.getPendingRequests);
 
+app.put('/logIn', auth.logIn);
 app.put('/tokens', auth.setTokens);
 app.put('/template', sheets.copyTemplateTo);
 app.put('/findAndReplace', sheets.findAndReplace);
@@ -50,12 +74,3 @@ app.post('/createGoal', analytics.createGoal);
 app.listen( port, function(){
 	console.log("listening on port " + port);
 });
-
-// api key: AIzaSyAiii8Og5zZlJ7m1rjg1sYbSIYzkU2uvUs
-// Scope: https://www.googleapis.com/auth/spreadsheets
-// Discovery Sheet: https://sheets.googleapis.com/$discovery/rest?version=v4
-// Client ID: 1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com
-// Template spreadsheet ID: 13cDmMd-iS8tofM-EvSSMWD4VsT1zN-r0AZoEupDJ9WE
-// Client secret: D1ht5Wso2vydo5XIKD4_fO3G
-// Developer Token: NRfUDgxy825XbJ-jmNbLZQ
-

@@ -1,0 +1,11 @@
+<div>
+	<img ng-show="show" id="wait" src="./img/wait.gif">
+	<div ng-repeat="message in messages">
+		<p> {{message}} </p>
+	</div>
+</div>
+
+<div ng-hide="show">
+	<h1>Done!</h1>
+	<section ng-click="startOver()">Start Over</section>
+</div>

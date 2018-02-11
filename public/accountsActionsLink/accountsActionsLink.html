@@ -1,0 +1,10 @@
+<div>
+	<img ng-show="show" id="wait" src="./img/wait.gif">
+	<div ng-repeat="message in messages">
+		<p> {{message}} </p>
+	</div>
+</div>
+
+<div ng-hide="show">
+	<section ng-click="toClientLogInLink()">Next</section>
+</div>

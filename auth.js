@@ -4,8 +4,6 @@ const AdwordsUser = require('node-adwords').AdwordsUser;
 const AdwordsConstants = require('node-adwords').AdwordsConstants;
 const axios = require('axios');
 
-
- 
 let adwordsUser = new AdwordsUser({
 	developerToken: 'NRfUDgxy825XbJ-jmNbLZQ', //your adwords developerToken
 	userAgent: 'Fill Your Seats', //any company name
@@ -15,11 +13,9 @@ let adwordsUser = new AdwordsUser({
 	// refresh_token: 'INSERT_OAUTH2_REFRESH_TOKEN_HERE'
 });
 
-let oauth2Client = new OAuth2(
-	'1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
-	'D1ht5Wso2vydo5XIKD4_fO3G',
-	'http://fillyourseatssetup.zapto.org:3000'
-);
+let oauth2Client = '';
+	
+var url = '';
 
 var scopes = [
   'https://www.googleapis.com/auth/tagmanager.edit.containers', 
@@ -36,10 +32,7 @@ var scopes = [
   'https://www.googleapis.com/auth/drive'
 ];
 
-var url = oauth2Client.generateAuthUrl({
-  access_type: 'offline',
-  scope: scopes
-});
+
 
 let refreshToken;
 let accessToken;
@@ -47,18 +40,22 @@ let accessToken;
 module.exports = {
 	google: google,
 
-	firstLogIn: function(req, res, next) {
+	logIn: function(req, res, next) {
+		oauth2Client = new OAuth2(
+			'1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
+			'D1ht5Wso2vydo5XIKD4_fO3G',
+			req.body.redirectUrl
+		);
+		url = oauth2Client.generateAuthUrl({
+			access_type: 'offline',
+			scope: scopes
+		});
 		res.send({
 			url: url
 		});
 	},
 
-	secondLogIn: function(req, res, next) {
-		oauth2Client = new OAuth2(
-		  '1037770292-oohlht2dnieanagkcmt90o8979grn3h8.apps.googleusercontent.com',
-		  'D1ht5Wso2vydo5XIKD4_fO3G',
-		  'http://fillyourseatssetup.zapto.org:3000'
-		);
+	setTokens: function(req, res, next) {
 		adwordsUser = new AdwordsUser({
 		    developerToken: 'NRfUDgxy825XbJ-jmNbLZQ', //your adwords developerToken
 			userAgent: 'Client', //any company name
@@ -67,21 +64,11 @@ module.exports = {
 		    client_secret: 'D1ht5Wso2vydo5XIKD4_fO3G',
 			// refresh_token: 'INSERT_OAUTH2_REFRESH_TOKEN_HERE'
 		});
-
-		url = oauth2Client.generateAuthUrl({
-		  access_type: 'offline',
-		  scope: scopes,
-		});
-		res.send({
-			url: url
-		})
-	},
-
-	setTokens: function(req, res, next) {
+		console.log(oauth2Client);
 		var code = req.body.code;
 		oauth2Client.getToken(code, function (err, tokens) {
  	 		if (err) {
- 	 			console.log("set tokens: ", err);
+ 	 			console.log("set tokens error: ", err);
  	 		} else {
  	 			if (tokens.refresh_token) {
  	 				refreshToken = tokens.refresh_token;

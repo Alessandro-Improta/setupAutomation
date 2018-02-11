@@ -13,19 +13,18 @@
 	<input ng-hide="linking" ng-model="addressOfTheater" placeholder="Address of Theater">
 	<input ng-hide="linking" ng-model="conversionValue" placeholder="Avg. Ticket Price">
 
-	<button ng-hide="linking" ng-click="mainAccountActions()">Do It!</button>
-	<button ng-hide="linking" ng-click="getCustomerId()">Just Linking accounts?</button>
-	<button ng-show="linking" ng-click="relink()">Send Link</button>
+	<section ng-hide="linking" ng-click="mainAccountActions()">Do It!</section>
+	<section ng-hide="linking" ng-click="getCustomerId()">Just Linking accounts?</section>
+	<section ng-show="linking" ng-click="relink()">Send Link</section>
 </div>
 
 <div  ng-show="show1">
 	<img id="wait" src="./img/wait.gif">
 </div>
 
-<button ng-click="startOver()">Start Over</button>
+<section ng-click="startOver()">Start Over</section>
 
 <div ng-show="show2">
-	<button ng-click="secondLogIn()">Log Into Client Account</button>
+	<section ng-click="secondLogIn()">Log Into Client Account</section>
 </div>
 
-<!-- <a href='#' ng-click='downloadCSV({ filename: "stock-data.csv" });'>Download CSV</a> -->

@@ -19,8 +19,8 @@ angular.module('setupApp').controller('mainController', function($scope, $locati
 
 	$scope.mainAccountActions = function() {
 		let counter = 0;
-		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homePageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUri', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
-		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUri, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
+		let keys = ['templateId', 'theater', 'city', 'state', 'customerId', 'website', 'homepageUrl', 'aboutUrl', 'directionsUrl', 'buyTicketsUrl', 'addressOfTheater', 'conversionUrl', 'conversionValue'];
+		let values = [$scope.templateId, $scope.theater, $scope.city, $scope.state, $scope.customerId, $scope.website, $scope.homePageUrl, $scope.aboutUrl, $scope.directionsUrl, $scope.buyTicketsUrl, $scope.addressOfTheater, $scope.conversionUrl, $scope.conversionValue];
 		$scope.show = false;
 		$scope.show1 = true;
 		addData(keys, values);
