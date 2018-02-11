@@ -134,4 +134,5 @@ angular.module('setupApp', ['ui.router'])
 		// $locationProvider.hashPrefix('');
 		$locationProvider.html5Mode(true);
 	})
+	.run(['$state', '$stateParams', function($state, $stateParams){}]);
 	
