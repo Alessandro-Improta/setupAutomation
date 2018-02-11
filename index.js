@@ -16,6 +16,7 @@ const serveFile = function(req, res, next) {
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
+app.all('/', serveFile);
 app.all('/newOrLink', serveFile);
 app.all('/templateQuestion', serveFile);
 app.all('/enterTemplate', serveFile);
