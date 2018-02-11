@@ -13,7 +13,7 @@ const serveFile = function(req, res, next) {
   res.sendFile("/public/index.html", {root: __dirname })
 };
 
-app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 app.all('/', serveFile);
